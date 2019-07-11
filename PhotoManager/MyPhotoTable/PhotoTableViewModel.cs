@@ -15,29 +15,30 @@ namespace KsWare.PhotoManager.MyPhotoTable
 {
 	public class PhotoTableViewModel : PropertyChangedBase
 	{
-		private ObservableCollection<PhotoTableItemViewModel> _items = new ObservableCollection<PhotoTableItemViewModel>();
-		private string[] _supportedExtensions = {".jpg", ".jpeg", ".png", ".bmp", ".emf", ".exif", ".gif", ".ico", ".tif", ".tiff", ".wmf" };
-		private int _size = 256;
-
+		//TODO [Import]
+		private ImageLoader ImageLoader => ImageLoader.Instance;
+		//TODO [Import]
 		private UserSettings UserSettings => UserSettings.Instance;
+
+		private ObservableCollection<PhotoTableItemViewModel> _items = new ObservableCollection<PhotoTableItemViewModel>();
+		private readonly string[] _supportedExtensions = ImageTools.SupportedExtensions.Select(x=>x.Key).ToArray();
+		private int _size = 256;
 
 		public PhotoTableViewModel()
 		{
 			if(DesignerProperties.GetIsInDesignMode(new DependencyObject())) return;
-			//			Load(@"E:\Fotos\2019-06-22 Import DMC-FZ7");
-//			Load(@"E:\Fotos\2019-07-06 Import DC-FZ1000 II")
 			if (UserSettings.DefaultFolder != null)
 			{
 				Task.Run(() => Load(UserSettings.DefaultFolder)).ConfigureAwait(false);
 			}
 			else
 			{
-				Task.Run(OpenFolder).ConfigureAwait(false);
+				Task.Run(FileOpenFolder).ConfigureAwait(false);
 			}
 			
 		}
 
-		private void OpenFolder()
+		public void FileOpenFolder()
 		{
 			//TODO maybe use another FolderDialog, but for the first, this one does the job
 			string folder = null;
@@ -59,6 +60,8 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			UserSettings.Save();
 			Load(UserSettings.DefaultFolder);
 		}
+
+		public bool CanFileOpenFolder() => true;
 
 		public int Size { get => _size; set => Set(ref _size, value);}
 
