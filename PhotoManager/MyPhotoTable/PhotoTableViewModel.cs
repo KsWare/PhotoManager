@@ -58,6 +58,9 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			if(folder==null) return;
 			UserSettings.DefaultFolder = folder;
 			UserSettings.Save();
+
+			ImageLoader.Stop();
+
 			Load(UserSettings.DefaultFolder);
 		}
 

@@ -105,5 +105,13 @@ namespace KsWare.PhotoManager.Tools
 				Debug.WriteLine($"Prioritized items: {c}");
 			}
 		}
+
+		public void Stop()
+		{
+			lock (SyncRoot)
+			{
+				_queue.Clear();
+			}
+		}
 	}
 }
