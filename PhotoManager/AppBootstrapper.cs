@@ -1,3 +1,4 @@
+using KsWare.PhotoManager.Settings;
 using KsWare.PhotoManager.Shell;
 
 namespace PhotoManager {
@@ -33,6 +34,7 @@ namespace PhotoManager {
         }
 
         protected override void OnStartup(object sender, System.Windows.StartupEventArgs e) {
+			UserSettings.Load();
             DisplayRootViewFor<IShell>();
         }
     }
