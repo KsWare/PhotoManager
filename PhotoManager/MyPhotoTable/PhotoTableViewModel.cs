@@ -8,7 +8,9 @@ using System.Windows.Threading;
 using Caliburn.Micro;
 using KsWare.PhotoManager.Tools;
 using KsWare.PhotoManager.Extensions;
+using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Settings;
+using KsWare.PhotoManager.Shell;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace KsWare.PhotoManager.MyPhotoTable
@@ -19,10 +21,13 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		private ImageLoader ImageLoader => ImageLoader.Instance;
 		//TODO [Import]
 		private UserSettings UserSettings => UserSettings.Instance;
+		//TODO [Import]
+		private ShellViewModel ShellViewModel => ShellViewModel.Instance;
 
 		private ObservableCollection<PhotoTableItemViewModel> _items = new ObservableCollection<PhotoTableItemViewModel>();
 		private readonly string[] _supportedExtensions = ImageTools.SupportedExtensions.Select(x=>x.Key).ToArray();
 		private int _size = 256;
+		private bool _showDisplayNames;
 
 		public PhotoTableViewModel()
 		{
@@ -66,7 +71,14 @@ namespace KsWare.PhotoManager.MyPhotoTable
 
 		public bool CanFileOpenFolder() => true;
 
+		public void ViewColorTest()
+		{
+			ShellViewModel.MainContent=new ColorTestViewModel();
+		}
+
 		public int Size { get => _size; set => Set(ref _size, value);}
+
+		public bool ShowDisplayNames { get => _showDisplayNames; set => Set(ref _showDisplayNames, value);}
 
 		private void Load(string path)
 		{
@@ -79,7 +91,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			{
 				var ext = Path.GetExtension(file.Name)?.ToLower();
 				if(!_supportedExtensions.Contains(ext)) continue;
-				items.Add(new PhotoTableItemViewModel(file));
+				items.Add(new PhotoTableItemViewModel(this, file));
 			}
 			ApplicationWrapper.Dispatcher.Invoke(() => Items = items);
 			foreach (var item in items)
