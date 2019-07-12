@@ -4,19 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:myPhotoTable="clr-namespace:KsWare.PhotoManager.MyPhotoTable"
-             mc:Ignorable="d"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
              d:DataContext="{d:DesignInstance myPhotoTable:PhotoTableItemViewModel}">
 	<UserControl.Resources>
 		<BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 	</UserControl.Resources>
-	<Border Background="LightGray" BorderBrush="White" BorderThickness="1">
-		<DockPanel>
-			<TextBlock Text="{Binding DisplayName}" TextWrapping="Wrap" DockPanel.Dock="Bottom"/>
+	<Border Background="LightGray" BorderBrush="Transparent" BorderThickness="1">
+		<Grid>
 			<Grid Background="Black">
 				<Image Source="{Binding PreviewImage}" Stretch="Uniform" />
 				<Image Source="../Resources/icons8-medium-priority-48.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="24" 
 				       Visibility="{Binding IsPrioritizedLoad, Converter={StaticResource BoolToVisibilityConverter}}"/>
 			</Grid>
-		</DockPanel>
+			<TextBlock 
+				Text="{Binding DisplayName}" 
+				TextWrapping="Wrap" 
+				VerticalAlignment="Bottom" Margin="2"
+				Background="#80000000" Foreground="{StaticResource LabelTextBrush}" 
+				Visibility="{Binding ShowDisplayName, Converter={StaticResource BoolToVisibilityConverter}}"
+				/>
+		</Grid>
 	</Border>
 </UserControl>

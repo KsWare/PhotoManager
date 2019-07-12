@@ -5,11 +5,13 @@ using PhotoManager;
 namespace KsWare.PhotoManager.Shell {
 	public class ShellViewModel : PropertyChangedBase, IShell
 	{
+		public static ShellViewModel Instance;
 		private PropertyChangedBase _mainContent;
 
 		public ShellViewModel()
 		{
-			_mainContent=new PhotoTableViewModel();
+			Instance = this;
+			_mainContent =new PhotoTableViewModel();
 		}
 
 		public PropertyChangedBase MainContent { get => _mainContent; set => Set(ref _mainContent, value);}

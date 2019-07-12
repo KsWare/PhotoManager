@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
@@ -21,15 +22,29 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		private BitmapSource _previewImage;
 		private DateTime _dateTaken;
 		private string _filePath;
+		private readonly PhotoTableViewModel _photoTableViewModel;
 		private FileInfo _fileInfo;
 		private IMessageSink _nextSink;
 		private bool _isPrioritizedLoad;
+		private bool _showDisplayName;
 
-		public PhotoTableItemViewModel(FileInfo file)
+		public PhotoTableItemViewModel(PhotoTableViewModel photoTableViewModel, FileInfo file)
 		{
+			_photoTableViewModel = photoTableViewModel;
 			_fileInfo = file;
 			_filePath = file.FullName;
 			ClickCommand = new SimpleCommand(OnClick);
+			_photoTableViewModel.PropertyChanged+=PhotoTableViewModel_PropertyChanged;
+		}
+
+		private void PhotoTableViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			switch (e.PropertyName)
+			{
+				case nameof(PhotoTableViewModel.ShowDisplayNames):
+					ShowDisplayName = PreviewImage==null || _photoTableViewModel.ShowDisplayNames; 
+					break;
+			}
 		}
 
 		public string FilePath { get => _filePath; set => Set(ref _filePath, value);}
@@ -42,6 +57,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 
 		public bool IsPrioritizedLoad { get => _isPrioritizedLoad; set => Set(ref _isPrioritizedLoad, value);}
 
+		public bool ShowDisplayName { get => _showDisplayName; set => Set(ref _showDisplayName, value); }
 		public ICommand ClickCommand { get; }
 
 		private void OnClick()
@@ -54,6 +70,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		{
 			IsPrioritizedLoad = false;
 			PreviewImage = imageSource;
+			ShowDisplayName = _photoTableViewModel.ShowDisplayNames;
 		}
 
 		#region IMessageSink

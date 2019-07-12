@@ -9,7 +9,8 @@
              xmlns:behaviors="clr-namespace:KsWare.PhotoManager.Behaviors"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance myPhotoTable:PhotoTableViewModel}">
+			 x:Name="Root"
+             d:DataContext="{d:DesignInstance myPhotoTable:PhotoTableViewModel, IsDesignTimeCreatable=False}" d:DesignWidth="427" d:DesignHeight="218">
 	<GroupBox Header="Photo Table">
 		<DockPanel>
 			<Menu DockPanel.Dock="Top">
@@ -19,32 +20,38 @@
 				<MenuItem Header="_Edit" />
 				<MenuItem Header="_View">
 					<MenuItem x:Name="ViewRefresh"  Header="Refresh" />
+					<MenuItem x:Name="ViewColorTest"  Header="Color Test" />
 				</MenuItem>
 			</Menu>
-			<DockPanel LastChildFill="False" DockPanel.Dock="Top">
-				<TextBlock VerticalAlignment="Center" Text="Size"/>
-				<ComboBox IsEditable="False" SelectedValue="{Binding Size}">
-					<system:Int32>32</system:Int32>
-					<system:Int32>64</system:Int32>
-					<system:Int32>96</system:Int32>
-					<system:Int32>128</system:Int32>
-					<system:Int32>194</system:Int32>
-					<system:Int32>256</system:Int32>
-				</ComboBox>
-			</DockPanel>
+			<Grid DockPanel.Dock="Top" Background="{StaticResource GrayBrush8}">
+				<DockPanel LastChildFill="False" Margin="4">
+					<TextBlock VerticalAlignment="Center" Text="Size" Margin="0 0 6 0"/>
+					<ComboBox IsEditable="False" SelectedValue="{Binding Size}" BorderThickness="1" BorderBrush="#40000000" Background="Transparent">
+						<system:Int32>32</system:Int32>
+						<system:Int32>64</system:Int32>
+						<system:Int32>96</system:Int32>
+						<system:Int32>128</system:Int32>
+						<system:Int32>194</system:Int32>
+						<system:Int32>256</system:Int32>
+					</ComboBox>
+
+					<CheckBox x:Name="ShowDisplayNames" Margin="8 0 0 0" Content="Show Names"/>
+				</DockPanel>				
+			</Grid>
+
 
 			<ListBox 
 				x:Name="ListBox"
 				ItemsSource="{Binding Items}" 
 				ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				VirtualizingPanel.CacheLengthUnit="Item"
-				VirtualizingPanel.CacheLength="1"
+				VirtualizingPanel.CacheLength="10"
 				VirtualizingPanel.ScrollUnit= "Item"
 				VirtualizingPanel.VirtualizationMode ="Recycling"
 			>
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>
-						<controls:VirtualizingWrapPanel />
+						<controls:VirtualizingWrapPanel HorizontalAlignment="Left" MaxHeight="{Binding DataContext.Size, ElementName=Root}"/>
 					</ItemsPanelTemplate>
 				</ListBox.ItemsPanel>
 				<ListBox.ItemContainerStyle>
