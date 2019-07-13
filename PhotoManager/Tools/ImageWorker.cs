@@ -18,12 +18,15 @@ namespace KsWare.PhotoManager.Tools
 		private Thread _thread;
 		private bool _disposing;
 		private bool _disposed;
+		private ImageLoader _imageLoader;
 
-		public ImageWorker(string filePath, int maxSize, IMessageSink messageSink)
+		//TODO revise
+		public ImageWorker(string filePath, int maxSize, IMessageSink messageSink, ImageLoader imageLoader)
 		{
 			FilePath = filePath;
 			_maxSize = maxSize;
 			_messageSink = messageSink;
+			_imageLoader = imageLoader;
 		}
 
 		public bool IsPrioritized { get; private set; }
@@ -68,7 +71,7 @@ namespace KsWare.PhotoManager.Tools
 			}
 			finally
 			{
-				ImageLoader.Instance.OnLoaded(this);
+				_imageLoader.OnLoaded(this);
 			}
 		}
 

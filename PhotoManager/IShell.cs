@@ -1,3 +1,3 @@
-namespace PhotoManager {
+namespace KsWare.PhotoManager {
     public interface IShell {}
 }
