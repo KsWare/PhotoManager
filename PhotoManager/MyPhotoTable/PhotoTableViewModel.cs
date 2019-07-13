@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using KsWare.PhotoManager.Common;
+using KsWare.PhotoManager.Extensions;
+using KsWare.PhotoManager.MyImageViewer;
 using KsWare.PhotoManager.Tools;
 using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Settings;
@@ -53,6 +55,15 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			_imageLoader.Stop();
 
 			Load(_settingsManager.User.DefaultFolder);
+		}
+
+		public void FileOpenFile()
+		{
+			var imgageViewer = _serviceLocator.GetInstance<ImageViewerViewModel>();
+			ApplicationWrapper.Dispatcher.BeginInvoke(() =>
+				_shellViewModel.MainContent = imgageViewer); // TODO use ViewChanger
+
+			ApplicationWrapper.Dispatcher.BeginInvoke(() => imgageViewer.MenuFileOpen());
 		}
 
 		public bool CanFileOpenFolder() => true;
