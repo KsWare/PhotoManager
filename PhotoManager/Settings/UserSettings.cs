@@ -7,33 +7,32 @@ namespace KsWare.PhotoManager.Settings
 {
 	public class UserSettings
 	{
+		public static UserSettings Load()
+		{
+			UserSettings settings;
+			if (!File.Exists(FileName))
+			{
+				settings = new UserSettings();
+			}
+			else
+			{
+				using (var sr = new StreamReader(File.OpenRead(FileName), Encoding.UTF8))
+				{
+					var json = sr.ReadToEnd();
+					settings = JsonConvert.DeserializeObject<UserSettings>(json);
+				}				
+			}
+			return settings;
+		}
 
-		public static UserSettings Instance;
-
-		public static void Save()
+		public void Save()
 		{
 			Directory.CreateDirectory(FolderName);
-			string json = JsonConvert.SerializeObject(Instance, Formatting.Indented);
+			string json = JsonConvert.SerializeObject(this, Formatting.Indented);
 			using (var sw = new StreamWriter(File.OpenWrite(FileName), Encoding.UTF8))
 			{
 				sw.Write(json);
 			}
-		}
-
-		public static void Load()
-		{
-			if (!File.Exists(FileName))
-			{
-				Instance = new UserSettings();
-				return;
-			}
-
-			using (var sr = new StreamReader(File.OpenRead(FileName), Encoding.UTF8))
-			{
-				var json = sr.ReadToEnd();
-				Instance = JsonConvert.DeserializeObject<UserSettings>(json);
-			}
-
 		}
 
 		private static string Version => "0.9";
@@ -43,9 +42,5 @@ namespace KsWare.PhotoManager.Settings
 		private static string FileName => Path.Combine(FolderName, "User.settings");
 
 		public string DefaultFolder { get; set; }
-
-
-
-
 	}
 }

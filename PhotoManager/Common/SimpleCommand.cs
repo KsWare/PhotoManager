@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace KsWare.PhotoManager.MvvmFramework
+namespace KsWare.PhotoManager.Common
 {
 	public class SimpleCommand : ICommand
 	{

@@ -1,40 +1,44 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
+using KsWare.PhotoManager.Common;
 using KsWare.PhotoManager.Communication;
-using KsWare.PhotoManager.MvvmFramework;
 using KsWare.PhotoManager.Tools;
-using Path = System.IO.Path;
 
 namespace KsWare.PhotoManager.MyPhotoTable
 {
+	[Export,PartCreationPolicy(CreationPolicy.NonShared)]
 	public class PhotoTableItemViewModel : PropertyChangedBase, IMessageSink
 	{
+		[Import] private ImageLoader _imageLoader;
+
 		private string _displayName;
 		private BitmapSource _previewImage;
 		private DateTime _dateTaken;
 		private string _filePath;
-		private readonly PhotoTableViewModel _photoTableViewModel;
+		private PhotoTableViewModel _photoTableViewModel;
 		private FileInfo _fileInfo;
 		private IMessageSink _nextSink;
 		private bool _isPrioritizedLoad;
 		private bool _showDisplayName;
 
-		public PhotoTableItemViewModel(PhotoTableViewModel photoTableViewModel, FileInfo file)
+		public PhotoTableItemViewModel()
+		{
+			ClickCommand = new SimpleCommand(OnClick); //TODO revise
+		}
+
+		public void Setup(PhotoTableViewModel photoTableViewModel, FileInfo file)
 		{
 			_photoTableViewModel = photoTableViewModel;
 			_fileInfo = file;
 			_filePath = file.FullName;
-			ClickCommand = new SimpleCommand(OnClick);
-			_photoTableViewModel.PropertyChanged+=PhotoTableViewModel_PropertyChanged;
+			_photoTableViewModel.PropertyChanged += PhotoTableViewModel_PropertyChanged;
 		}
 
 		private void PhotoTableViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -42,12 +46,12 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			switch (e.PropertyName)
 			{
 				case nameof(PhotoTableViewModel.ShowDisplayNames):
-					ShowDisplayName = PreviewImage==null || _photoTableViewModel.ShowDisplayNames; 
+					ShowDisplayName = PreviewImage == null || _photoTableViewModel.ShowDisplayNames;
 					break;
 			}
 		}
 
-		public string FilePath { get => _filePath; set => Set(ref _filePath, value);}
+		public string FilePath { get => _filePath; set => Set(ref _filePath, value); }
 
 		public string DisplayName { get => _displayName; set => Set(ref _displayName, value); }
 
@@ -55,15 +59,16 @@ namespace KsWare.PhotoManager.MyPhotoTable
 
 		public DateTime DateTaken { get => _dateTaken; set => Set(ref _dateTaken, value); }
 
-		public bool IsPrioritizedLoad { get => _isPrioritizedLoad; set => Set(ref _isPrioritizedLoad, value);}
+		public bool IsPrioritizedLoad { get => _isPrioritizedLoad; set => Set(ref _isPrioritizedLoad, value); }
 
 		public bool ShowDisplayName { get => _showDisplayName; set => Set(ref _showDisplayName, value); }
+
 		public ICommand ClickCommand { get; }
 
 		private void OnClick()
 		{
 			PreviewImage = null;
-			ImageLoader.Instance.Add(FilePath, 100, this);
+			_imageLoader.Add(FilePath, 100, this);
 		}
 
 		private void OnImageLoaded(BitmapSource imageSource)
@@ -74,12 +79,11 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		}
 
 		#region IMessageSink
+
 		IMessage IMessageSink.SyncProcessMessage(IMessage msg)
 		{
-			if(msg is ImageLoadedMessage imageLoaded)
-			{
-				OnImageLoaded(imageLoaded.ImageSource);
-			}
+			if (msg is ImageLoadedMessage imageLoaded) { OnImageLoaded(imageLoaded.ImageSource); }
+
 			return msg;
 		}
 
@@ -89,6 +93,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		}
 
 		IMessageSink IMessageSink.NextSink => _nextSink;
+
 		#endregion
 
 		public void OnDataContextAssigned()
@@ -96,7 +101,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			if (PreviewImage == null)
 			{
 				IsPrioritizedLoad = true;
-				ImageLoader.Instance.Prioritize(FilePath, true);
+				_imageLoader.Prioritize(FilePath, true);
 			}
 		}
 
@@ -105,7 +110,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			if (PreviewImage == null)
 			{
 				IsPrioritizedLoad = false;
-				ImageLoader.Instance.Prioritize(FilePath, false);
+				_imageLoader.Prioritize(FilePath, false);
 			}
 		}
 
@@ -120,7 +125,7 @@ namespace KsWare.PhotoManager.MyPhotoTable
 				});
 			});
 
-			ImageLoader.Instance.Add(FilePath, 256, this);
+			_imageLoader.Add(FilePath, 256, this);
 		}
 	}
 }

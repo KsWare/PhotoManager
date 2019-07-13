@@ -1,20 +1,27 @@
+using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using KsWare.PhotoManager.Common;
 using KsWare.PhotoManager.MyPhotoTable;
-using PhotoManager;
 
-namespace KsWare.PhotoManager.Shell {
-	public class ShellViewModel : PropertyChangedBase, IShell
+namespace KsWare.PhotoManager.Shell
+{
+	[Export(typeof(IShell)), PartCreationPolicy(CreationPolicy.Shared)]
+	public class ShellViewModel : Screen, IShell, IPartImportsSatisfiedNotification
 	{
-		public static ShellViewModel Instance;
+		[Import] private IServiceLocator _serviceLocator;
 		private PropertyChangedBase _mainContent;
 
-		public ShellViewModel()
+		public PropertyChangedBase MainContent { get => _mainContent; set => Set(ref _mainContent, value); }
+
+		void IPartImportsSatisfiedNotification.OnImportsSatisfied()
 		{
-			Instance = this;
-			_mainContent =new PhotoTableViewModel();
 		}
 
-		public PropertyChangedBase MainContent { get => _mainContent; set => Set(ref _mainContent, value);}
+		protected override void OnInitialize()
+		{
+			base.OnInitialize();
+			MainContent = _serviceLocator.GetInstance<PhotoTableViewModel>();
+		}
 
 	}
 }

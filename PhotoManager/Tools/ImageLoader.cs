@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Media.Imaging;
 
 namespace KsWare.PhotoManager.Tools
 {
+	[Export, PartCreationPolicy(CreationPolicy.Shared)]
 	public class ImageLoader : IDisposable
 	{
-		public static readonly ImageLoader Instance=new ImageLoader();
-
 		private List<ImageWorker> _queue=new List<ImageWorker>();
 		private List<ImageWorker> _loadQueue = new List<ImageWorker>();
 		private ManualResetEvent _signal=new ManualResetEvent(false);
@@ -35,7 +31,7 @@ namespace KsWare.PhotoManager.Tools
 		{
 			lock (SyncRoot)
 			{
-				var w = new ImageWorker(filePath, maxSize, messageSink);
+				var w = new ImageWorker(filePath, maxSize, messageSink,this);
 				_queue.Add(w);
 				_signal.Set();
 				return w;
