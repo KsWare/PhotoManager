@@ -93,6 +93,10 @@
     <Compile Include="IShell.cs" />
     <Compile Include="Common\IViewLocator.cs" />
     <Compile Include="Common\DebugCompositionContainer.cs" />
+    <Compile Include="MyImageViewer\ImageViewerView.xaml.cs">
+      <DependentUpon>ImageViewerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyImageViewer\ImageViewerViewModel.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="StartupTasks.cs" />
@@ -114,6 +118,10 @@
     <Compile Include="Tools\ImageLoader.cs" />
     <Compile Include="Tools\ImageTools.cs" />
     <Compile Include="Tools\ImageWorker.cs" />
+    <Page Include="MyImageViewer\ImageViewerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyPhotoTable\PhotoTableItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
