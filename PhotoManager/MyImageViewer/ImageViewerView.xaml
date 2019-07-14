@@ -27,7 +27,9 @@
 				<MenuItem x:Name="MenuFileOpen" Header="_Open..."/>
 			</MenuItem>
 			<MenuItem Header="_Edit"></MenuItem>
-			<MenuItem Header="_View"></MenuItem>
+			<MenuItem Header="_View">
+				<MenuItem x:Name="MenuViewPhotoTable" Header="_Photo Table"></MenuItem>
+			</MenuItem>
 		</Menu>
 		<Grid DockPanel.Dock="Top" Visibility="Collapsed">
 			<DockPanel Margin="4"></DockPanel>
