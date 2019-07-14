@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using KsWare.PhotoManager.Common;
+using KsWare.PhotoManager.Shell;
 
 namespace KsWare.PhotoManager
 {
@@ -20,6 +21,13 @@ namespace KsWare.PhotoManager
 		{
 			var viewLocator = _serviceLocator.GetInstance<IViewLocator>();
 			Caliburn.Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
+		}
+
+		[Export(typeof(StartupTask))]
+		public void ShowPhotoTable()
+		{
+			var shell = (ShellViewModel)_serviceLocator.GetInstance<IShell>();
+			shell.ShowPhotoTable();
 		}
 	}
 }

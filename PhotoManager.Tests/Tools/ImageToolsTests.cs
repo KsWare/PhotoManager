@@ -27,7 +27,6 @@ namespace KsWare.PhotoManagerTests.Tools
 			Assert.That(bitmap.Height, Is.EqualTo(120));
 		}
 
-
 		private string GetFullName(string relativePath)
 		{
 			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

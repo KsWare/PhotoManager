@@ -1,27 +1,31 @@
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using KsWare.PhotoManager.Common;
+using KsWare.PhotoManager.MyImageViewer;
 using KsWare.PhotoManager.MyPhotoTable;
 
 namespace KsWare.PhotoManager.Shell
 {
 	[Export(typeof(IShell)), PartCreationPolicy(CreationPolicy.Shared)]
-	public class ShellViewModel : Screen, IShell, IPartImportsSatisfiedNotification
+	public sealed class ShellViewModel : Conductor<object>, IShell, IPartImportsSatisfiedNotification
 	{
-		[Import] private IServiceLocator _serviceLocator;
-		private PropertyChangedBase _mainContent;
+		[Import] private PhotoTableViewModel _photoTableViewModel;
+		[Import] private ImageViewerViewModel _imageViewer;
 
-		public PropertyChangedBase MainContent { get => _mainContent; set => Set(ref _mainContent, value); }
+		public PhotoTableViewModel ShowPhotoTable()
+		{
+			ActivateItem(_photoTableViewModel);
+			return _photoTableViewModel;
+		}
+
+		public ImageViewerViewModel ShowImageViewer()
+		{
+			ActivateItem(_imageViewer);
+			return _imageViewer;
+		}
 
 		void IPartImportsSatisfiedNotification.OnImportsSatisfied()
 		{
 		}
-
-		protected override void OnInitialize()
-		{
-			base.OnInitialize();
-			MainContent = _serviceLocator.GetInstance<PhotoTableViewModel>();
-		}
-
 	}
 }

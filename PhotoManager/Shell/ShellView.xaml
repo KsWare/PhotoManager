@@ -5,6 +5,6 @@
 		Title="KsWare PhotoManager"
         >
 
-    <ContentControl x:Name="MainContent"/>
+	<ContentControl x:Name="ActiveItem"/>
 
 </mc:MetroWindow>
