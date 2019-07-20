@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Threading;
 
 namespace KsWare.PhotoManager.Tools
@@ -24,5 +25,8 @@ namespace KsWare.PhotoManager.Tools
 				}
 			}
 		}
+
+		public static IntPtr MainWindowHandle => new WindowInteropHelper(MainWindow).Handle;
+		public static Window MainWindow => Application.Current.MainWindow;
 	}
 }

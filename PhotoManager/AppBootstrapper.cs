@@ -5,6 +5,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using KsWare.PhotoManager.Common;
 
@@ -35,11 +36,14 @@ namespace KsWare.PhotoManager {
 
 			batch.AddExportedValue<IWindowManager>(new WindowManager());
 			batch.AddExportedValue<IEventAggregator>(new EventAggregator());
-//			batch.AddExportedValue(_container); // TODO Warning: A CompositionContainer should never import itself, or a part that has a reference to it. Such a reference could allow an untrusted part to gain access all the parts in the container.
+			//batch.AddExportedValue(_container); // DISABLED Warning: A CompositionContainer should never import itself, or a part that has a reference to it. Such a reference could allow an untrusted part to gain access all the parts in the container.
 			batch.AddExportedValue<IServiceLocator>(new MefServiceLocator(_container));
 			batch.AddExportedValue(catalog);
 
 			_container.Compose(batch);
+
+			//TODO?? ConventionManager.AddElementConvention<MenuItem>(ItemsControl.ItemsSourceProperty, "DataContext", "Click");
+			//TODO add mapping convention to support 'VM' suffix
 		}
 
 		protected override IEnumerable<object> GetAllInstances(Type serviceType)

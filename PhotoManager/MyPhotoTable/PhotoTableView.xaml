@@ -47,11 +47,13 @@
 				x:Name="ListBox"
 				ItemsSource="{Binding Items}" 
 				SelectedItem="{Binding SelectedItem}"
+				SelectionMode="{Binding SelectionMode}"
 				ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				VirtualizingPanel.CacheLengthUnit="Item"
 				VirtualizingPanel.CacheLength="10"
 				VirtualizingPanel.ScrollUnit= "Item"
 				VirtualizingPanel.VirtualizationMode ="Recycling"
+				cal:Message.Attach="[Event SelectionChanged] = [Action ListBox_SelectionChanged($eventArgs)]"
 			>
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>
@@ -63,6 +65,7 @@
 						<Setter Property="Margin" Value="0"/>
 						<Setter Property="Padding" Value="0"/>
 						<Setter Property="cal:Message.Attach" Value="[Event MouseDoubleClick] = [Action ShowImageViewer($dataContext)]"/>
+						<Setter Property="IsSelected" Value="{Binding IsSelected}" />
 					</Style>
 				</ListBox.ItemContainerStyle>
 				<ListBox.ItemTemplate>
