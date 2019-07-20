@@ -51,6 +51,7 @@
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
@@ -63,6 +64,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -85,8 +87,11 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Behaviors\VirtualizationBehavior.cs" />
+    <Compile Include="Common\Commands\IMenuItemViewModel.cs" />
+    <Compile Include="Common\Commands\MenuItemSeparatorViewModel.cs" />
     <Compile Include="Common\IThemeManager.cs" />
     <Compile Include="Common\ThemeManager.cs" />
+    <Compile Include="Common\Commands\UiCommandViewModel.cs" />
     <Compile Include="Common\ViewLocator.cs" />
     <Compile Include="Communication\ImageLoadedMessage.cs" />
     <Compile Include="Communication\TextMessage.cs" />
@@ -98,6 +103,8 @@
       <DependentUpon>ImageViewerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyImageViewer\ImageViewerViewModel.cs" />
+    <Compile Include="Common\Commands\CommandViewModel.cs" />
+    <Compile Include="Common\Commands\MenuItemViewModel.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="StartupTasks.cs" />
@@ -106,7 +113,7 @@
     </Compile>
     <Compile Include="MyPhotoTable\PhotoTableItemViewModel.cs" />
     <Compile Include="MyPhotoTable\PhotoTableViewModel.cs" />
-    <Compile Include="Common\SimpleCommand.cs" />
+    <Compile Include="Common\Commands\SimpleCommand.cs" />
     <Compile Include="Resources\ColorTestView.xaml.cs">
       <DependentUpon>ColorTestView.xaml</DependentUpon>
     </Compile>
@@ -116,9 +123,13 @@
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
     <Compile Include="Tools\ApplicationWrapper.cs" />
+    <Compile Include="Tools\GetOpenWithInfos.cs" />
     <Compile Include="Tools\ImageLoader.cs" />
     <Compile Include="Tools\ImageTools.cs" />
     <Compile Include="Tools\ImageWorker.cs" />
+    <Compile Include="Tools\OpenWithInfo.cs" />
+    <Compile Include="Tools\ShellContextMenu.cs" />
+    <Compile Include="Tools\WindowShell.cs" />
     <Page Include="MyImageViewer\ImageViewerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

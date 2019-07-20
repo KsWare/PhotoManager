@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tools\ImageToolsTests.cs" />
+    <Compile Include="Tools\OpenWithInfoTests.cs" />
+    <Compile Include="Tools\GetOpenWithInfosTests.cs" />
+    <Compile Include="Tools\WindowShellTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -10,6 +10,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace KsWare.PhotoManager.Tools
 {
@@ -219,6 +221,24 @@ namespace KsWare.PhotoManager.Tools
 		public static ImageFormat GetImageFormat(string extension)
 		{
 			return SupportedExtensions.TryGetValue(extension, out var imageFormat) ? imageFormat : null;
+		}
+
+		public static DateTime? GetDate(string fileName, Func<ShellProperties, ShellProperty<DateTime?>> selector)
+		{
+			using (var file = ShellFile.FromFilePath(fileName))
+			{
+				var d = selector(file.Properties);
+				return d.Value;
+			}
+		}
+
+		public static object GetValue(string fileName, Func<ShellProperties, IShellProperty> selector)
+		{
+			using (var file = ShellFile.FromFilePath(fileName))
+			{
+				var d = selector(file.Properties);
+				return d.ValueAsObject;
+			}
 		}
 	}
 }

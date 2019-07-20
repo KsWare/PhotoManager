@@ -4,11 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:myPhotoTable="clr-namespace:KsWare.PhotoManager.MyPhotoTable"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:commands="clr-namespace:KsWare.PhotoManager.Common.Commands"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
              d:DataContext="{d:DesignInstance myPhotoTable:PhotoTableItemViewModel}">
 	<UserControl.Resources>
 		<BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 	</UserControl.Resources>
+	<UserControl.ContextMenu>
+
+		<ContextMenu
+			ItemsSource="{Binding PlacementTarget.DataContext.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+			cal:Message.Attach="[Event Opened] = [Action OnContextMenuOpened]"
+			UsesItemContainerTemplate="True"
+		>
+			<ContextMenu.Resources>
+				<ItemContainerTemplate DataType="{x:Type commands:MenuItemSeparatorViewModel}">
+					<Separator/>
+				</ItemContainerTemplate>				
+				<ItemContainerTemplate DataType="{x:Type commands:MenuItemViewModel}">
+					<MenuItem 
+						UsesItemContainerTemplate="True" 
+						Header="{Binding DisplayName}" 
+						Command="{Binding}"
+						ToolTip="{Binding ToolTip}"
+						ItemsSource="{Binding SubItems}"
+						/>
+				</ItemContainerTemplate>
+			</ContextMenu.Resources>
+		</ContextMenu>
+	</UserControl.ContextMenu>
+
 	<Border Background="LightGray" BorderBrush="Transparent" BorderThickness="1">
 		<Grid>
 			<Grid Background="Black">

@@ -1,8 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using KsWare.PhotoManager.Common;
@@ -33,14 +37,27 @@ namespace KsWare.PhotoManager.MyPhotoTable
 		private PhotoTableItemViewModel _selectedItem;
 		private bool _showDisplayNames;
 		private int _size = 256;
+		private SelectionMode _selectionMode = SelectionMode.Extended;
+		private BindableCollection<PhotoTableItemViewModel> _selectedItems = new BindableCollection<PhotoTableItemViewModel>();
+		private bool _isMoreAsOneItemSelected;
+		private int _selectedItemsCount;
 
 		public PhotoTableItemViewModel SelectedItem { get => _selectedItem; set => Set(ref _selectedItem, value); }
+
+		public IObservableCollection<PhotoTableItemViewModel> SelectedItems => _selectedItems;
 
 		public int Size { get => _size; set => Set(ref _size, value); }
 
 		public bool ShowDisplayNames { get => _showDisplayNames; set => Set(ref _showDisplayNames, value); }
 
 		public ObservableCollection<PhotoTableItemViewModel> Items { get => _items; set => Set(ref _items, value); }
+		public SelectionMode SelectionMode { get => _selectionMode; set => Set(ref _selectionMode, value);}
+
+		public void ListBox_SelectionChanged(SelectionChangedEventArgs e)
+		{
+			_selectedItems.RemoveRange(e.RemovedItems.Cast<PhotoTableItemViewModel>());
+			_selectedItems.AddRange(e.AddedItems.Cast<PhotoTableItemViewModel>());
+		}
 
 		void IPartImportsSatisfiedNotification.OnImportsSatisfied()
 		{
@@ -48,7 +65,18 @@ namespace KsWare.PhotoManager.MyPhotoTable
 				Task.Run(() => Load(_settingsManager.User.DefaultFolder)).ConfigureAwait(false);
 			else
 				Task.Run(MenuFileOpenFolder).ConfigureAwait(false);
+			_selectedItems.CollectionChanged+=SelectedItems_CollectionChanged;
 		}
+
+		private void SelectedItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			SelectedItemsCount = _selectedItems.Count;
+			IsMoreAsOneItemSelected = _selectedItems.Count > 1;
+		}
+
+		public bool IsMoreAsOneItemSelected { get => _isMoreAsOneItemSelected; private set => Set(ref _isMoreAsOneItemSelected, value);}
+		public int SelectedItemsCount { get => _selectedItemsCount; private set => Set(ref _selectedItemsCount, value);}
+
 
 		public void MenuFileOpenFolder()
 		{
@@ -89,8 +117,12 @@ namespace KsWare.PhotoManager.MyPhotoTable
 
 		public void MenuViewOpenImage()
 		{
-			var imageViewer = _shell.ShowImageViewer();
-			imageViewer.OpenImage(SelectedItem.FilePath);
+			_shell.ShowImageViewer().OpenImage(SelectedItem.FilePath);
+		}
+
+		public void ContextMenuView(object selectedItem)
+		{
+			//_shell.ShowImageViewer().OpenImage(selectedItem.FilePath);
 		}
 
 		public void ViewRefresh()
@@ -117,8 +149,10 @@ namespace KsWare.PhotoManager.MyPhotoTable
 			{
 				var ext = Path.GetExtension(file.Name)?.ToLower();
 				if (!_supportedExtensions.Contains(ext)) continue;
-				var item = _serviceLocator.GetInstance<PhotoTableItemViewModel>();
-				item.Setup(this, file);
+				//TODO use correct way to instantiate a PhotoTableItemViewModel
+//				var item = _serviceLocator.GetInstance<PhotoTableItemViewModel>(new Dictionary<string, object> { { "Parent", this }, { "FileInfo", file } });
+				var item = _serviceLocator.CreateInstanceDirect<PhotoTableItemViewModel>(this, file);
+//				item.Setup(this, file); 
 				items.Add(item);
 			}
 
