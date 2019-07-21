@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interactivity;
-using KsWare.PhotoManager.MyPhotoTable;
+using KsWare.PhotoManager.Common;
 
 namespace KsWare.PhotoManager.Behaviors
 {
 	public class VirtualizationBehavior: Behavior<FrameworkElement>
 	{
-		private PhotoTableItemViewModel _prevVM;
+		private IDataContextObserver _prevVM;
 
 		protected override void OnAttached()
 		{
@@ -42,17 +42,16 @@ namespace KsWare.PhotoManager.Behaviors
 
 		private void OnDataContextChanged(object eNewValue, object eOldValue, string reason)
 		{
-			if (eNewValue != null && eNewValue is PhotoTableItemViewModel newVM)
+			if (eNewValue != null && eNewValue is IDataContextObserver newVM)
 			{
 				_prevVM = newVM;
 				newVM.OnDataContextAssigned();
 			}
-			else if (eOldValue != null && eOldValue is PhotoTableItemViewModel oldVM)
+			else if (eOldValue != null && eOldValue is IDataContextObserver oldVM)
 			{
 				oldVM.OnDataContextReleased(reason);
 				_prevVM = null;
 			}
 		}
 	}
-
 }
