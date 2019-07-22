@@ -1,7 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using KsWare.PhotoManager.Tools;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using NUnit.Framework;
 
 namespace KsWare.PhotoManagerTests.Tools
@@ -31,6 +34,19 @@ namespace KsWare.PhotoManagerTests.Tools
 		{
 			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			return Path.Combine(assemblyFolder, relativePath);
+		}
+
+		[Test]
+		public void ShellFilePropertiesTest()
+		{
+			using (var file = ShellFile.FromFilePath(GetFullName("Resources\\exif.jpg")))
+			{
+				var dpc = file.Properties.DefaultPropertyCollection;
+				foreach (var p in dpc)
+				{
+					Debug.WriteLine($"{p.CanonicalName,-60} {p.FormatForDisplay(PropertyDescriptionFormatOptions.None),-30} {p.ValueType.Name,-30} {p.Description.DisplayName}");
+				}
+			}
 		}
 	}
 }

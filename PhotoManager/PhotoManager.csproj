@@ -86,6 +86,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Behaviors\ScrollIntoViewBehavior.cs" />
+    <Compile Include="Behaviors\WheelSpeedBehavior.cs" />
+    <Compile Include="Common\IDataContextObserver.cs" />
     <Compile Include="Behaviors\VirtualizationBehavior.cs" />
     <Compile Include="Common\Commands\IMenuItemViewModel.cs" />
     <Compile Include="Common\Commands\MenuItemSeparatorViewModel.cs" />
@@ -95,24 +98,33 @@
     <Compile Include="Common\ViewLocator.cs" />
     <Compile Include="Communication\ImageLoadedMessage.cs" />
     <Compile Include="Communication\TextMessage.cs" />
+    <Compile Include="Extensions\ApplicationDispatcher.cs" />
     <Compile Include="Extensions\DispatcherExtension.cs" />
+    <Compile Include="Screens\ImageViewer\ImageView.xaml.cs">
+      <DependentUpon>ImageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IShell.cs" />
     <Compile Include="Common\IViewLocator.cs" />
     <Compile Include="Common\DebugCompositionContainer.cs" />
-    <Compile Include="MyImageViewer\ImageViewerView.xaml.cs">
+    <Compile Include="Screens\FileInfo\FileInfoViewModel.cs" />
+    <Compile Include="Screens\ImageViewer\ImageViewerView.xaml.cs">
       <DependentUpon>ImageViewerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyImageViewer\ImageViewerViewModel.cs" />
+    <Compile Include="Screens\ImageViewer\ImageViewModel.cs" />
+    <Compile Include="Screens\ImageViewer\ScrollImageViewerViewModel.cs" />
+    <Compile Include="Screens\ImageViewer\ImageViewerViewModel.cs" />
     <Compile Include="Common\Commands\CommandViewModel.cs" />
     <Compile Include="Common\Commands\MenuItemViewModel.cs" />
+    <Compile Include="Common\TaskList.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Screens\ImageViewer\IImageViewerViewModel.cs" />
     <Compile Include="StartupTasks.cs" />
-    <Compile Include="MyPhotoTable\PhotoTableItemView.xaml.cs">
-      <DependentUpon>PhotoTableItemView.xaml</DependentUpon>
+    <Compile Include="Screens\PhotoTable\ImageThumbView.xaml.cs">
+      <DependentUpon>ImageThumbView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyPhotoTable\PhotoTableItemViewModel.cs" />
-    <Compile Include="MyPhotoTable\PhotoTableViewModel.cs" />
+    <Compile Include="Screens\PhotoTable\ImageThumbViewModel.cs" />
+    <Compile Include="Screens\PhotoTable\PhotoTableViewModel.cs" />
     <Compile Include="Common\Commands\SimpleCommand.cs" />
     <Compile Include="Resources\ColorTestView.xaml.cs">
       <DependentUpon>ColorTestView.xaml</DependentUpon>
@@ -123,6 +135,7 @@
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
     <Compile Include="Tools\ApplicationWrapper.cs" />
+    <Compile Include="Tools\AsyncHelper.cs" />
     <Compile Include="Tools\GetOpenWithInfos.cs" />
     <Compile Include="Tools\ImageLoader.cs" />
     <Compile Include="Tools\ImageTools.cs" />
@@ -130,19 +143,31 @@
     <Compile Include="Tools\OpenWithInfo.cs" />
     <Compile Include="Tools\ShellContextMenu.cs" />
     <Compile Include="Tools\WindowShell.cs" />
-    <Page Include="MyImageViewer\ImageViewerView.xaml">
+    <Page Include="Screens\ImageViewer\ImageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\ImageViewer\ScrollmageViewerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\ImageViewer\ImageViewerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyPhotoTable\PhotoTableItemView.xaml">
+    <Page Include="Screens\PhotoTable\ImageThumbView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyPhotoTable\PhotoTableView.xaml">
+    <Page Include="Screens\PhotoTable\PhotoTableView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\ColorTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MahAppOverride.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
