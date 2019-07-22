@@ -34,6 +34,8 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		private Point _contextMenuMousePosition;
 		private bool _isSelected;
 		private Lazy<BindableCollection<MenuItemViewModel>> _contextMenuItems;
+		private double? _exposureBias;
+		private string _exposureBiasDisplayString;
 
 		[ImportingConstructor]
 		public ImageThumbViewModel(
@@ -159,19 +161,8 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			}
 		}
 
-		public void BeginInitialize()
-		{
-			Task.Run(() =>
-			{
-				var date = _fileInfo.LastWriteTime; //TODO use correct date
-				ApplicationWrapper.Dispatcher.Invoke(() =>
-				{
-					DateTaken = date; 
-					DisplayName = _fileInfo.Name;
-				});
-			});
-
-		}
+		public double? ExposureBias { get => _exposureBias; set => Set(ref _exposureBias, value);}
+		public string ExposureBiasDisplayString { get => _exposureBiasDisplayString; set => Set(ref _exposureBiasDisplayString, value);}
 
 		public Task InitializeAsync()
 		{
@@ -181,10 +172,14 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			{
 				_imageLoader.Add(FilePath, 256, this);
 				var date = _fileInfo.LastWriteTime; //TODO use correct date
+				var exposureBias = (double?)ImageTools.GetValue(_filePath, p => p.System.Photo.ExposureBias);
 				OnUIThread(() =>
 				{
 					DateTaken = date;
 					DisplayName = _fileInfo.Name;
+					ExposureBias = exposureBias;
+					ExposureBiasDisplayString = exposureBias.HasValue ? ((exposureBias < 0 ? "-" : "") + (exposureBias > 0 ? "+" : "") +
+					                            Math.Abs(exposureBias.Value) + " EV") : "";
 				});
 			}
 		}

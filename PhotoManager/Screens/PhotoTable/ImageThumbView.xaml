@@ -44,6 +44,8 @@
 				<Image Source="../../Resources/icons8-medium-priority-48.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="24" 
 				       Visibility="{Binding IsPrioritizedLoad, Converter={StaticResource BoolToVisibilityConverter}}"/>
 			</Grid>
+			<TextBlock Text="{Binding ExposureBiasDisplayString}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2" Background="#80000000" Foreground="{StaticResource LabelTextBrush}" >
+			</TextBlock>
 			<TextBlock 
 				Text="{Binding DisplayName}" 
 				TextWrapping="Wrap" 
