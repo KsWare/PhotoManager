@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -10,6 +11,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using KsWare.CaliburnMicro.Tools;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
@@ -236,8 +238,16 @@ namespace KsWare.PhotoManager.Tools
 		{
 			using (var file = ShellFile.FromFilePath(fileName))
 			{
-				var d = selector(file.Properties);
-				return d.ValueAsObject;
+				try
+				{
+					var d = selector(file.Properties);
+					return d.ValueAsObject;
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine($"ERROR GetValue => {ex.Message}");
+					return null;
+				}
 			}
 		}
 	}

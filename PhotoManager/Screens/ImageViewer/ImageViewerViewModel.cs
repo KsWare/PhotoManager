@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
+using KsWare.CaliburnMicro.DragDrop;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;
 using Microsoft.Win32;
@@ -12,7 +15,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 {
 	[Export]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class ImageViewerViewModel : Screen
+	public class ImageViewerViewModel : Screen, ICustomDropTarget
 	{
 		[Import(typeof(IShell))] private ShellViewModel _shell;
 
@@ -87,6 +90,67 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 			ImageSource = new Uri(_currentFilePath);
 			FileName = Path.GetFileName(_currentFilePath);
 			FullName = _currentFilePath;
+		}
+
+		void ICustomDropTarget.OnDrop(object sender, DragEventArgs e)
+		{
+			var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+			if (files.Length == 1)
+			{
+				if (Directory.Exists(files[0]))
+				{
+
+					foreach (var file in Directory.EnumerateFiles(files[0]))
+					{
+						if (SupportExtensions.Contains(Path.GetExtension(file)))
+						{
+							Task.Run(() => OpenImage(file));
+							break;
+						}
+					}
+				}
+				else if (File.Exists(files[0]))
+				{
+					Task.Run(() => OpenImage(files[0]));
+				}
+			}
+			else
+			{
+				//TODO open multiple files
+			}
+		}
+
+		void ICustomDropTarget.OnDragEnter(object sender, DragEventArgs e)
+		{
+
+		}
+
+		void ICustomDropTarget.OnGiveFeedback(object sender, GiveFeedbackEventArgs e)
+		{
+
+		}
+
+		void ICustomDropTarget.OnDragOver(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop))
+			{
+				var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+				if (files.Length == 1)
+				{
+					// TODO check supported file
+					e.Effects = DragDropEffects.Copy;
+				}
+				else
+				{
+					// TODO support multiple files
+				}
+
+			}
+		}
+
+		void ICustomDropTarget.OnDragLeave(object sender, DragEventArgs e)
+		{
+
 		}
 	}
 }

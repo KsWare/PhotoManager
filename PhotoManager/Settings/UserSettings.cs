@@ -29,7 +29,7 @@ namespace KsWare.PhotoManager.Settings
 		{
 			Directory.CreateDirectory(FolderName);
 			string json = JsonConvert.SerializeObject(this, Formatting.Indented);
-			using (var sw = new StreamWriter(File.OpenWrite(FileName), Encoding.UTF8))
+			using (var sw = new StreamWriter(File.Open(FileName,FileMode.Create,FileAccess.Write), Encoding.UTF8))
 			{
 				sw.Write(json);
 			}

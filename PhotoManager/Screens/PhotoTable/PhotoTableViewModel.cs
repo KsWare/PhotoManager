@@ -4,10 +4,13 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
-using KsWare.PhotoManager.Common;
-using KsWare.PhotoManager.Extensions;
+using KsWare.CaliburnMicro.Common;
+using KsWare.CaliburnMicro.DragDrop;
+using KsWare.CaliburnMicro.Extensions;
+using KsWare.CaliburnMicro.Tools;
 using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Screens.ImageViewer;
 using KsWare.PhotoManager.Settings;
@@ -20,7 +23,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 {
 	[Export]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class PhotoTableViewModel : Screen, IPartImportsSatisfiedNotification
+	public class PhotoTableViewModel : Screen, IPartImportsSatisfiedNotification, ICustomDropTarget
 	{
 		[Import] private ImageLoader _imageLoader;
 		[Import] private IServiceLocator _serviceLocator;
@@ -167,6 +170,50 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			tasks.AddRange(items.Select(i => i.InitializeAsync()));
 
 			return Task.WhenAll(tasks);
+		}
+
+		void ICustomDropTarget.OnDrop(object sender, DragEventArgs e)
+		{
+			var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+			if (files.Length == 1)
+			{
+				if (Directory.Exists(files[0]))
+				{
+					Task.Run(() => LoadAsync(files[0]));
+				}
+				else if (File.Exists(files[0]))
+				{
+					Task.Run(() => LoadAsync(Path.GetDirectoryName(files[0])));
+				}
+			}
+		}
+
+		void ICustomDropTarget.OnDragEnter(object sender, DragEventArgs e)
+		{
+
+		}
+
+		void ICustomDropTarget.OnGiveFeedback(object sender, GiveFeedbackEventArgs e)
+		{
+
+		}
+
+		void ICustomDropTarget.OnDragOver(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop))
+			{
+				var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+				if (files.Length == 1)
+				{
+					e.Effects = DragDropEffects.Copy;
+				}
+				
+			}
+		}
+
+		void ICustomDropTarget.OnDragLeave(object sender, DragEventArgs e)
+		{
+
 		}
 
 	}

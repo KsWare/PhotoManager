@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
-using KsWare.PhotoManager.Common;
-using KsWare.PhotoManager.Common.Commands;
+using KsWare.CaliburnMicro.Commands;
+using KsWare.CaliburnMicro.Common;
+using KsWare.CaliburnMicro.Extensions;
 using KsWare.PhotoManager.Communication;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;
@@ -33,7 +35,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		private bool _showDisplayName;
 		private Point _contextMenuMousePosition;
 		private bool _isSelected;
-		private Lazy<BindableCollection<MenuItemViewModel>> _contextMenuItems;
+		private Lazy<BindableCollection<IMenuItemViewModel>> _contextMenuItems;
 		private double? _exposureBias;
 		private string _exposureBiasDisplayString;
 
@@ -46,10 +48,10 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			_fileInfo = file;
 			_filePath = file.FullName;
 			Parent.PropertyChanged += PhotoTableViewModel_PropertyChanged;
-			_contextMenuItems=new Lazy<BindableCollection<MenuItemViewModel>>(() =>
+			_contextMenuItems=new Lazy<BindableCollection<IMenuItemViewModel>>(() =>
 			{
-				var items = new BindableCollection<MenuItemViewModel>();
-				InitContextMenu();
+				var items = new BindableCollection<IMenuItemViewModel>();
+				InitContextMenu(items);
 				return items;
 			});
 		}
@@ -206,12 +208,12 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 
 		public PhotoTableViewModel Parent { get; set; }
 
-		public BindableCollection<MenuItemViewModel> ContextMenuItems => _contextMenuItems.Value;
+		public BindableCollection<IMenuItemViewModel> ContextMenuItems => _contextMenuItems.Value;
 
-		private void InitContextMenu()
+		private void InitContextMenu(IList<IMenuItemViewModel> contextMenuItems)
 		{
-			ContextMenuItems.Clear();
-			ContextMenuItems.AddRange(new[]
+			contextMenuItems.Clear();
+			contextMenuItems.AddRange(new[]
 			{
 				new MenuItemViewModel("View", ContextMenuView),
 				new MenuItemViewModel("Edit", ContextMenuEdit),

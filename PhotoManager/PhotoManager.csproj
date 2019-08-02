@@ -88,24 +88,13 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Behaviors\ScrollIntoViewBehavior.cs" />
     <Compile Include="Behaviors\WheelSpeedBehavior.cs" />
-    <Compile Include="Common\IDataContextObserver.cs" />
     <Compile Include="Behaviors\VirtualizationBehavior.cs" />
-    <Compile Include="Common\Commands\IMenuItemViewModel.cs" />
-    <Compile Include="Common\Commands\MenuItemSeparatorViewModel.cs" />
-    <Compile Include="Common\IThemeManager.cs" />
-    <Compile Include="Common\ThemeManager.cs" />
-    <Compile Include="Common\Commands\UiCommandViewModel.cs" />
-    <Compile Include="Common\ViewLocator.cs" />
     <Compile Include="Communication\ImageLoadedMessage.cs" />
     <Compile Include="Communication\TextMessage.cs" />
-    <Compile Include="Extensions\ApplicationDispatcher.cs" />
-    <Compile Include="Extensions\DispatcherExtension.cs" />
     <Compile Include="Screens\ImageViewer\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="IShell.cs" />
-    <Compile Include="Common\IViewLocator.cs" />
-    <Compile Include="Common\DebugCompositionContainer.cs" />
     <Compile Include="Screens\FileInfo\FileInfoViewModel.cs" />
     <Compile Include="Screens\ImageViewer\ImageViewerView.xaml.cs">
       <DependentUpon>ImageViewerView.xaml</DependentUpon>
@@ -113,9 +102,6 @@
     <Compile Include="Screens\ImageViewer\ImageViewModel.cs" />
     <Compile Include="Screens\ImageViewer\ScrollImageViewerViewModel.cs" />
     <Compile Include="Screens\ImageViewer\ImageViewerViewModel.cs" />
-    <Compile Include="Common\Commands\CommandViewModel.cs" />
-    <Compile Include="Common\Commands\MenuItemViewModel.cs" />
-    <Compile Include="Common\TaskList.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Screens\ImageViewer\IImageViewerViewModel.cs" />
@@ -125,17 +111,12 @@
     </Compile>
     <Compile Include="Screens\PhotoTable\ImageThumbViewModel.cs" />
     <Compile Include="Screens\PhotoTable\PhotoTableViewModel.cs" />
-    <Compile Include="Common\Commands\SimpleCommand.cs" />
     <Compile Include="Resources\ColorTestView.xaml.cs">
       <DependentUpon>ColorTestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\ColorTestViewModel.cs" />
-    <Compile Include="Common\IServiceLocator.cs" />
-    <Compile Include="Common\MefServiceLocator.cs" />
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
-    <Compile Include="Tools\ApplicationWrapper.cs" />
-    <Compile Include="Tools\AsyncHelper.cs" />
     <Compile Include="Tools\GetOpenWithInfos.cs" />
     <Compile Include="Tools\ImageLoader.cs" />
     <Compile Include="Tools\ImageTools.cs" />
@@ -209,5 +190,6 @@
   <ItemGroup>
     <Folder Include="Services\" />
   </ItemGroup>
+  <Import Project="..\..\Caliburn.Micro.KsWare\src\KsWare.CaliburnMicro.Shared\KsWare.CaliburnMicro.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

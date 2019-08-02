@@ -2,8 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-		Title="KsWare PhotoManager"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:dragDrop="clr-namespace:KsWare.CaliburnMicro.DragDrop"
+
+        Title="KsWare PhotoManager"
         >
+	<i:Interaction.Behaviors>
+		<dragDrop:DropTargetBehavior/>
+	</i:Interaction.Behaviors>
 
 	<ContentControl x:Name="ActiveItem"/>
 

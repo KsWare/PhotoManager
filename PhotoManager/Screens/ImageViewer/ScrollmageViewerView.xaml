@@ -6,7 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:KsWare.PhotoManager.Behaviors"
              xmlns:imageViewer="clr-namespace:KsWare.PhotoManager.Screens.ImageViewer"
-             x:Class="KsWare.PhotoManager.MyImageViewer.ScrollImageViewerView"
+             x:Class="KsWare.PhotoManager.Screens.ImageViewer.ScrollImageViewerView"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type imageViewer:ScrollImageViewerViewModel}, IsDesignTimeCreatable=False}"
              d:DesignHeight="450" d:DesignWidth="800">

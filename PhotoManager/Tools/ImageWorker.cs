@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Shapes;
 using KsWare.PhotoManager.Communication;
 using  System.IO;
+using KsWare.CaliburnMicro.Tools;
 using Path = System.IO.Path;
 
 namespace KsWare.PhotoManager.Tools

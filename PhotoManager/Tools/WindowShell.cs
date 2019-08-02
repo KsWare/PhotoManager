@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using KsWare.CaliburnMicro.Tools;
 using Point = System.Windows.Point;
 
 namespace KsWare.PhotoManager.Tools

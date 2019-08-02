@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager", "PhotoManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager.Tests", "PhotoManager.Tests\PhotoManager.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "KsWare.CaliburnMicro.Shared", "..\Caliburn.Micro.KsWare\src\KsWare.CaliburnMicro.Shared\KsWare.CaliburnMicro.Shared.shproj", "{86190D9B-948F-4D35-B64E-EC9BB9BF8558}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\Caliburn.Micro.KsWare\src\KsWare.CaliburnMicro.Shared\KsWare.CaliburnMicro.Shared.projitems*{1606b74a-0b89-464c-82b3-95f39a396d87}*SharedItemsImports = 4
+		..\Caliburn.Micro.KsWare\src\KsWare.CaliburnMicro.Shared\KsWare.CaliburnMicro.Shared.projitems*{86190d9b-948f-4d35-b64e-ec9bb9bf8558}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

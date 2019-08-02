@@ -1,32 +1,29 @@
 ﻿using System.ComponentModel.Composition;
-using KsWare.PhotoManager.Common;
+using KsWare.CaliburnMicro.Common;
 using KsWare.PhotoManager.Shell;
 
 namespace KsWare.PhotoManager
 {
 	public delegate void StartupTask();
 
-	public class StartupTasks
+	public class StartupTasks : StartupTasksBase
 	{
-		private readonly IServiceLocator _serviceLocator;
-
 		[ImportingConstructor]
-		public StartupTasks(IServiceLocator serviceLocator)
+		public StartupTasks(IServiceLocator serviceLocator) :base(serviceLocator)
 		{
-			_serviceLocator = serviceLocator;
 		}
 
 		[Export(typeof(StartupTask))]
 		public void ApplyViewLocatorOverride()
 		{
-			var viewLocator = _serviceLocator.GetInstance<IViewLocator>();
+			var viewLocator = ServiceLocator.GetInstance<IViewLocator>();
 			Caliburn.Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
 		}
 
 		[Export(typeof(StartupTask))]
 		public void ShowPhotoTable()
 		{
-			var shell = (ShellViewModel)_serviceLocator.GetInstance<IShell>();
+			var shell = (ShellViewModel)ServiceLocator.GetInstance<IShell>();
 			shell.ShowPhotoTable();
 		}
 	}

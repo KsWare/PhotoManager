@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interactivity;
-using KsWare.PhotoManager.Common;
+using KsWare.CaliburnMicro.Common;
 
 namespace KsWare.PhotoManager.Behaviors
 {

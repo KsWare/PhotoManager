@@ -5,8 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:cal="http://www.caliburnproject.org"
-             xmlns:commands="clr-namespace:KsWare.PhotoManager.Common.Commands"
              xmlns:photoTable="clr-namespace:KsWare.PhotoManager.Screens.PhotoTable"
+             xmlns:commands="clr-namespace:KsWare.CaliburnMicro.Commands"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
              d:DataContext="{d:DesignInstance photoTable:ImageThumbViewModel, IsDesignTimeCreatable=False}"
              >
@@ -44,7 +44,10 @@
 				<Image Source="../../Resources/icons8-medium-priority-48.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="24" 
 				       Visibility="{Binding IsPrioritizedLoad, Converter={StaticResource BoolToVisibilityConverter}}"/>
 			</Grid>
-			<TextBlock Text="{Binding ExposureBiasDisplayString}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2" Background="#80000000" Foreground="{StaticResource LabelTextBrush}" >
+			<TextBlock 
+				Text="{Binding ExposureBiasDisplayString}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2" Background="#80000000" Foreground="{StaticResource LabelTextBrush}" 
+				Visibility="{Binding ShowDisplayName, Converter={StaticResource BoolToVisibilityConverter}}"
+				>
 			</TextBlock>
 			<TextBlock 
 				Text="{Binding DisplayName}" 

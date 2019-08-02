@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
-using KsWare.PhotoManager.Common;
+using KsWare.CaliburnMicro.Common;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;
 

@@ -24,7 +24,7 @@
 	</i:Interaction.Behaviors>
 	<Grid>
 		<TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource LabelTextBrush}"/>
-		<!-- <Image Source="{Binding ImageSource}" Stretch="Uniform" /> -->
+		<Image Source="{Binding ImageSource}" Stretch="Uniform" />
 		<TextBox 
 			Text="{Binding FileName, Mode=OneWay}" 
 			Padding="0" Margin="0 4 0 0" 
