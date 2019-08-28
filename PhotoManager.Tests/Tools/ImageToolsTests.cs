@@ -52,7 +52,9 @@ namespace KsWare.PhotoManagerTests.Tools
 		[Test]
 		public void ShellFilePropertiesTest2()
 		{
-			using (var file = ShellFile.FromFilePath(@"E:\Fotos\2019-08-09 Import RX10M4\S4003017.JPG"))
+			var f = @"E:\Fotos\2019-08-09 Import RX10M4\S4003017.JPG";
+			if(!File.Exists(f)) Assert.Inconclusive($"Local-Only-Test File:\"{f}\"");
+			using (var file = ShellFile.FromFilePath(f))
 			{
 				var dpc = file.Properties.DefaultPropertyCollection;
 				foreach (var p in dpc)
