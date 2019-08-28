@@ -8,12 +8,15 @@ using System.Windows.Shapes;
 using KsWare.PhotoManager.Communication;
 using  System.IO;
 using KsWare.CaliburnMicro.Tools;
+using KsWare.Presentation.StaticWrapper;
 using Path = System.IO.Path;
 
 namespace KsWare.PhotoManager.Tools
 {
 	public class ImageWorker : IDisposable
 	{
+		private IApplicationDispatcher ApplicationDispatcher => KsWare.Presentation.StaticWrapper.AssemblyBootstrapper.ApplicationDispatcher;
+
 		private readonly int _maxSize;
 		private readonly IMessageSink _messageSink;
 		private Thread _thread;
@@ -48,7 +51,7 @@ namespace KsWare.PhotoManager.Tools
 				{
 					var imageSource = ImageTools.CreateBitmapSource(cacheFilePath);
 					var msg = new ImageLoadedMessage(imageSource);
-					ApplicationWrapper.Dispatcher.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);
+					ApplicationDispatcher.Do.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);
 				}
 				else
 				{
@@ -57,7 +60,7 @@ namespace KsWare.PhotoManager.Tools
 					Debug.WriteLine($"Preview Image created ({previewImage.Width}x{previewImage.Height} {previewImage.PixelFormat})");
 					var imageSource = ImageTools.CreateBitmapSource2(previewImage);
 					var msg = new ImageLoadedMessage(imageSource);
-					ApplicationWrapper.Dispatcher.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);					
+					ApplicationDispatcher.Do.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);					
 				}
 			}
 			catch (OutOfMemoryException ex)

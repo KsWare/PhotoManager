@@ -2,6 +2,7 @@ using System.ComponentModel.Composition;
 using System.Windows;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.DragDrop;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Screens.ImageViewer;
 using KsWare.PhotoManager.Screens.PhotoTable;
 

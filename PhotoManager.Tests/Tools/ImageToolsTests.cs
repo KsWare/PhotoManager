@@ -48,5 +48,18 @@ namespace KsWare.PhotoManagerTests.Tools
 				}
 			}
 		}
+
+		[Test]
+		public void ShellFilePropertiesTest2()
+		{
+			using (var file = ShellFile.FromFilePath(@"E:\Fotos\2019-08-09 Import RX10M4\S4003017.JPG"))
+			{
+				var dpc = file.Properties.DefaultPropertyCollection;
+				foreach (var p in dpc)
+				{
+					Debug.WriteLine($"{p.CanonicalName,-60} {p.FormatForDisplay(PropertyDescriptionFormatOptions.None),-30} {p.ValueType.Name,-30} {p.Description.DisplayName}");
+				}
+			}
+		}
 	}
 }

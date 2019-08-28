@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using KsWare.CaliburnMicro.Tools;
+using KsWare.Presentation.StaticWrapper;
 using Point = System.Windows.Point;
 
 namespace KsWare.PhotoManager.Tools
 {
 	public static class WindowShell
 	{
+		private static IApplication ApplicationWrapper => KsWare.Presentation.StaticWrapper.AssemblyBootstrapper.ApplicationWrapper;
 		public static void ShowOpenWithDialog(string path)
 		{
 			var args = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll");
@@ -33,7 +30,7 @@ namespace KsWare.PhotoManager.Tools
 
 		public static void OpenContextMenu(IList<FileInfo> files, Point? position)
 		{
-			var windowHandle = ApplicationWrapper.MainWindowHandle;
+			var windowHandle = ApplicationWrapper.Get.MainWindowHandle;
 			var scm = new ShellContextMenu();
 			scm.ShowContextMenu(files, position.HasValue ? position.Value : GetMousePosition());
 		}
@@ -41,8 +38,8 @@ namespace KsWare.PhotoManager.Tools
 
 		public static Point GetMousePosition()
 		{
-				var window = ApplicationWrapper.MainWindow;
-				return window.PointToScreen(Mouse.GetPosition(window));
+			var window = ApplicationWrapper.MainWindow;
+			return window.PointToScreen(Mouse.GetPosition(window));
 		}
 	}
 }

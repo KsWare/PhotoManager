@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.Composition;
 using KsWare.CaliburnMicro.Common;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Shell;
 
 namespace KsWare.PhotoManager
 {
-	public delegate void StartupTask();
-
 	public class StartupTasks : StartupTasksBase
 	{
 		[ImportingConstructor]

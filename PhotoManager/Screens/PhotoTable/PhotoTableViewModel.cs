@@ -10,12 +10,14 @@ using Caliburn.Micro;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.DragDrop;
 using KsWare.CaliburnMicro.Extensions;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.CaliburnMicro.Tools;
 using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Screens.ImageViewer;
 using KsWare.PhotoManager.Settings;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;
+using KsWare.Presentation.StaticWrapper;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Action = System.Action;
 
@@ -29,7 +31,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		[Import] private IServiceLocator _serviceLocator;
 		[Import] private SettingsManager _settingsManager;
 		[Import(typeof(IShell))] private ShellViewModel _shell;
-		private ApplicationDispatcherExtender UiThread = ApplicationDispatcher.Instance.Do;
+		private ApplicationDispatcherExtender UiThread = ApplicationDispatcher.Do;
 
 		private readonly string[] _supportedExtensions = ImageTools.SupportedExtensions.Select(x => x.Key).ToArray();
 
@@ -103,7 +105,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 
 			await Task.Run(() =>
 			{
-				string folder = ApplicationWrapper.Dispatcher.Invoke(AskForFolder);
+				var folder = ApplicationDispatcher.Do.Run(AskForFolder);
 				if (folder == null) return;
 
 				_settingsManager.User.DefaultFolder = folder;
@@ -116,8 +118,8 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 
 		public void MenuFileOpenFile()
 		{
-			ApplicationWrapper.Dispatcher.BeginInvoke(() => _shell.ShowImageViewer());
-			ApplicationWrapper.Dispatcher.BeginInvoke(() => ((ImageViewerViewModel) _shell.ActiveItem).MenuFileOpen());
+			ApplicationDispatcher.Do.RunAsync(() => _shell.ShowImageViewer());
+			ApplicationDispatcher.Do.RunAsync(() => ((ImageViewerViewModel) _shell.ActiveItem).MenuFileOpen());
 		}
 
 		public void MenuViewColorTest()

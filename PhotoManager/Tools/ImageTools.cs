@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using KsWare.CaliburnMicro.Tools;
+using KsWare.Presentation.StaticWrapper;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
@@ -19,6 +20,9 @@ namespace KsWare.PhotoManager.Tools
 {
 	public static class ImageTools
 	{
+		private static IApplicationDispatcher ApplicationDispatcher => AssemblyBootstrapper.ApplicationDispatcher;
+		private static bool InvokeRequired => ApplicationDispatcher.InvokeRequired;
+
 		public static readonly Dictionary<string, ImageFormat> SupportedExtensions = new Dictionary<string, ImageFormat>
 		{
 			{".jpg", ImageFormat.Jpeg},
@@ -92,7 +96,6 @@ namespace KsWare.PhotoManager.Tools
 		public static BitmapSource CreateBitmapSource2(Bitmap bitmap)
 		{
 			if (bitmap == null) throw new ArgumentNullException(nameof(bitmap));
-			if (ApplicationWrapper.Dispatcher == null) return null; // Is it possible?
 
 			try
 			{
@@ -105,7 +108,7 @@ namespace KsWare.PhotoManager.Tools
 
 					// Make sure to create the bitmap in the UI thread
 					if (InvokeRequired)
-						return (BitmapSource)ApplicationWrapper.Dispatcher.Invoke(
+						return (BitmapSource)ApplicationDispatcher.Do.Invoke(
 							new Func<Stream, BitmapSource>(CreateBitmapSourceFromBitmap),
 							DispatcherPriority.Normal,
 							memoryStream);
@@ -118,7 +121,7 @@ namespace KsWare.PhotoManager.Tools
 			}
 		}
 
-		private static bool InvokeRequired => Dispatcher.CurrentDispatcher != ApplicationWrapper.Dispatcher;
+		
 
 		private static BitmapSource CreateBitmapSourceFromBitmap(Stream stream)
 		{
@@ -170,7 +173,7 @@ namespace KsWare.PhotoManager.Tools
 		{
 			var uri=new Uri(cacheFilePath);
 			if (InvokeRequired)
-				return (BitmapSource)ApplicationWrapper.Dispatcher.Invoke(
+				return (BitmapSource)ApplicationDispatcher.Do.Invoke(
 					new Func<Uri, BitmapSource>(CreateBitmapSourceFromUri),
 					DispatcherPriority.Normal,uri);
 			return CreateBitmapSourceFromUri(uri);

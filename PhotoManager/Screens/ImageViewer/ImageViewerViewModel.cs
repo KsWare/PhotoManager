@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.DragDrop;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;
 using Microsoft.Win32;

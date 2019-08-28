@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.Common;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.CaliburnMicro.Tools;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;

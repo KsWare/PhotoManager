@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using KsWare.CaliburnMicro.Commands;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.Extensions;
+using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Communication;
 using KsWare.PhotoManager.Shell;
 using KsWare.PhotoManager.Tools;

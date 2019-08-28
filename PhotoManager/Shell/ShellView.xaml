@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:dragDrop="clr-namespace:KsWare.CaliburnMicro.DragDrop"
+        xmlns:dragDrop="clr-namespace:KsWare.CaliburnMicro.DragDrop;assembly=KsWare.CaliburnMicro"
 
         Title="KsWare PhotoManager"
         >

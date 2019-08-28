@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:cal="http://www.caliburnproject.org"
              xmlns:photoTable="clr-namespace:KsWare.PhotoManager.Screens.PhotoTable"
-             xmlns:commands="clr-namespace:KsWare.CaliburnMicro.Commands"
+             xmlns:commands="clr-namespace:KsWare.CaliburnMicro.Commands;assembly=KsWare.CaliburnMicro"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
              d:DataContext="{d:DesignInstance photoTable:ImageThumbViewModel, IsDesignTimeCreatable=False}"
              >
