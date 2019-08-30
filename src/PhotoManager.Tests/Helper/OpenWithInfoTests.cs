@@ -1,7 +1,7 @@
 ﻿using KsWare.PhotoManager.Helper;
 using NUnit.Framework;
 
-namespace KsWare.PhotoManagerTests.Tools
+namespace KsWare.PhotoManagerTests.Helper
 {
 	[TestFixture]
 	public class OpenWithInfoTests

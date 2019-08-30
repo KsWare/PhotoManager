@@ -10,9 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{81BDE783-3BD3-4C54-9F91-572BF300F3BF}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
-		..\appveyor.yml = ..\appveyor.yml
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
+		..\version.yml = ..\version.yml
 	EndProjectSection
 EndProject
 Global

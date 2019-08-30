@@ -1511,7 +1511,9 @@ namespace KsWare.PhotoManager.Helper
 				m_hookType,
 				m_filterFunc,
 				IntPtr.Zero,
+#pragma warning disable 618
 				(int)AppDomain.GetCurrentThreadId());
+#pragma warning restore 618
 		}
 		// ************************************************************************
 

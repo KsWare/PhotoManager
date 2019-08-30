@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KsWare.PhotoManager.Helper;
+﻿using KsWare.PhotoManager.Helper;
 using NUnit.Framework;
 
-namespace KsWare.PhotoManagerTests.Tools
+namespace KsWare.PhotoManagerTests.Helper
 {
 	[TestFixture]
 	public class WindowShellTests

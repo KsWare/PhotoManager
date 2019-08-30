@@ -7,10 +7,10 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using NUnit.Framework;
 
-namespace KsWare.PhotoManagerTests.Tools
+namespace KsWare.PhotoManagerTests.Helper
 {
 	[TestFixture]
-	public class ImageToolsTests
+	public class ImageHelperTests
 	{
 		[Test]
 		public void ResizeImageTest()

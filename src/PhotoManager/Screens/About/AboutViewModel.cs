@@ -41,7 +41,7 @@ namespace KsWare.PhotoManager.Screens.About
 			_applicationInformationalVersion = customAttributes.OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault()?.InformationalVersion;
 
 			InformationItems.Clear();
-			InformationItems.Add(new InformationItem("Licensing", "A\nB\nC"));
+			InformationItems.Add(new InformationItem("License", LoadEmbeddedResource(Assembly.GetExecutingAssembly(), "Resources/LICENSE")));
 			InformationItems.Add(new InformationItem("Components", LoadEmbeddedResource(Assembly.GetExecutingAssembly(), "Resources/Components.txt")));
 		}
 

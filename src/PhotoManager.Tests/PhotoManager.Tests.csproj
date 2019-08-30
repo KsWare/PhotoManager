@@ -64,10 +64,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tools\ImageToolsTests.cs" />
-    <Compile Include="Tools\OpenWithInfoTests.cs" />
-    <Compile Include="Tools\GetOpenWithInfosTests.cs" />
-    <Compile Include="Tools\WindowShellTests.cs" />
+    <Compile Include="Helper\ImageHelperTests.cs" />
+    <Compile Include="Helper\OpenWithInfoTests.cs" />
+    <Compile Include="Helper\GetOpenWithInfosTests.cs" />
+    <Compile Include="Helper\WindowShellTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
