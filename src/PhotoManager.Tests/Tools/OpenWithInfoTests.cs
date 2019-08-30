@@ -1,4 +1,4 @@
-﻿using KsWare.PhotoManager.Tools;
+﻿using KsWare.PhotoManager.Helper;
 using NUnit.Framework;
 
 namespace KsWare.PhotoManagerTests.Tools

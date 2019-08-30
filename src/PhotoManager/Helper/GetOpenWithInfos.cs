@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.Win32;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
 	public static class GetOpenWithInfos
 	{

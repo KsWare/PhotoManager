@@ -5,10 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.Common;
-using KsWare.CaliburnMicro.Shared;
-using KsWare.CaliburnMicro.Tools;
+using KsWare.CaliburnMicro.Helper;
+using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Shell;
-using KsWare.PhotoManager.Tools;
 using Microsoft.Win32;
 
 namespace KsWare.PhotoManager.Screens.ImageViewer
@@ -21,7 +20,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 		[Import] private IServiceLocator _serviceLocator;
 
 		private static readonly string[] SupportExtensions =
-			ImageTools.SupportedExtensions.Select(x => x.Key.ToLower()).ToArray();
+			ImageHelper.SupportedExtensions.Select(x => x.Key.ToLower()).ToArray();
 
 
 		private int _currentIndex;
@@ -35,7 +34,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 
 		public void MenuFileOpen()
 		{
-			var filter = "*" + string.Join("; *", ImageTools.SupportedExtensions.Select(x => x.Key));
+			var filter = "*" + string.Join("; *", ImageHelper.SupportedExtensions.Select(x => x.Key));
 
 			var dlg = new OpenFileDialog
 			{

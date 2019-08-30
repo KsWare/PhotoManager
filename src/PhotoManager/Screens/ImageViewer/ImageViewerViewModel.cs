@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.DragDrop;
-using KsWare.CaliburnMicro.Shared;
+using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Shell;
-using KsWare.PhotoManager.Tools;
 using Microsoft.Win32;
 
 namespace KsWare.PhotoManager.Screens.ImageViewer
@@ -21,7 +21,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 		[Import(typeof(IShell))] private ShellViewModel _shell;
 
 		private static readonly string[] SupportExtensions =
-			ImageTools.SupportedExtensions.Select(x => x.Key.ToLower()).ToArray();
+			ImageHelper.SupportedExtensions.Select(x => x.Key.ToLower()).ToArray();
 
 
 		private string _currentFilePath;
@@ -37,7 +37,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 
 		public void MenuFileOpen()
 		{
-			var filter = "*" + string.Join("; *", ImageTools.SupportedExtensions.Select(x => x.Key));
+			var filter = "*" + string.Join("; *", ImageHelper.SupportedExtensions.Select(x => x.Key));
 
 			var dlg = new OpenFileDialog
 			{

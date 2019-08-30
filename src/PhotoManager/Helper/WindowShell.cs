@@ -7,7 +7,7 @@ using System.Windows.Input;
 using KsWare.Presentation.StaticWrapper;
 using Point = System.Windows.Point;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
 	public static class WindowShell
 	{
@@ -20,7 +20,7 @@ namespace KsWare.PhotoManager.Tools
 		}
 
 		public static IEnumerable<OpenWithInfo> GetOpenWithInfo(string fileName) =>
-			KsWare.PhotoManager.Tools.GetOpenWithInfos.Do(fileName);
+			GetOpenWithInfos.Do(fileName);
 
 		public static void OpenContextMenu(string filePath, Point? position) => 
 			OpenContextMenu(new[]{new FileInfo(filePath)}, position);

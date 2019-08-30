@@ -12,10 +12,9 @@ using Caliburn.Micro;
 using KsWare.CaliburnMicro.Commands;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.Extensions;
-using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Communication;
+using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Shell;
-using KsWare.PhotoManager.Tools;
 using Microsoft.VisualBasic.FileIO;
 
 namespace KsWare.PhotoManager.Screens.PhotoTable
@@ -175,7 +174,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			{
 				_imageLoader.Add(FilePath, 256, this);
 				var date = _fileInfo.LastWriteTime; //TODO use correct date
-				var exposureBias = (double?)ImageTools.GetValue(_filePath, p => p.System.Photo.ExposureBias);
+				var exposureBias = (double?)ImageHelper.GetValue(_filePath, p => p.System.Photo.ExposureBias);
 				OnUIThread(() =>
 				{
 					DateTaken = date;

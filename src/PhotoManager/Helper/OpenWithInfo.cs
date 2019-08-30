@@ -1,4 +1,4 @@
-﻿namespace KsWare.PhotoManager.Tools
+﻿namespace KsWare.PhotoManager.Helper
 {
 	public class OpenWithInfo
 	{

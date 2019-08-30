@@ -2,9 +2,8 @@
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.Common;
-using KsWare.CaliburnMicro.Shared;
+using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Shell;
-using KsWare.PhotoManager.Tools;
 
 namespace KsWare.PhotoManager.Screens.ImageViewer
 {

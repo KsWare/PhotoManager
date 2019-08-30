@@ -130,13 +130,13 @@
     <Compile Include="Resources\ColorTestViewModel.cs" />
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
-    <Compile Include="Tools\GetOpenWithInfos.cs" />
-    <Compile Include="Tools\ImageLoader.cs" />
-    <Compile Include="Tools\ImageTools.cs" />
-    <Compile Include="Tools\ImageWorker.cs" />
-    <Compile Include="Tools\OpenWithInfo.cs" />
-    <Compile Include="Tools\ShellContextMenu.cs" />
-    <Compile Include="Tools\WindowShell.cs" />
+    <Compile Include="Helper\GetOpenWithInfos.cs" />
+    <Compile Include="Helper\ImageLoader.cs" />
+    <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="Helper\ImageWorker.cs" />
+    <Compile Include="Helper\OpenWithInfo.cs" />
+    <Compile Include="Helper\ShellContextMenu.cs" />
+    <Compile Include="Helper\WindowShell.cs" />
     <Page Include="Screens\About\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>

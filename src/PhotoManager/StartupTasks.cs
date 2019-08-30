@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using KsWare.CaliburnMicro.Common;
-using KsWare.CaliburnMicro.Shared;
 using KsWare.PhotoManager.Shell;
 
 namespace KsWare.PhotoManager

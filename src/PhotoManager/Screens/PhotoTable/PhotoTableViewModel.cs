@@ -10,13 +10,12 @@ using Caliburn.Micro;
 using KsWare.CaliburnMicro.Commands;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.DragDrop;
-using KsWare.CaliburnMicro.Shared;
+using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Screens.About;
 using KsWare.PhotoManager.Screens.ImageViewer;
 using KsWare.PhotoManager.Settings;
 using KsWare.PhotoManager.Shell;
-using KsWare.PhotoManager.Tools;
 using KsWare.Presentation.StaticWrapper;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Action = System.Action;
@@ -35,7 +34,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		[Import] private AboutViewModel _aboutViewModel;
 		private ApplicationDispatcherExtender UiThread = ApplicationDispatcher.Do;
 
-		private readonly string[] _supportedExtensions = ImageTools.SupportedExtensions.Select(x => x.Key).ToArray();
+		private readonly string[] _supportedExtensions = ImageHelper.SupportedExtensions.Select(x => x.Key).ToArray();
 
 		private IObservableCollection<ImageThumbViewModel> _items = new BindableCollection<ImageThumbViewModel>();
 

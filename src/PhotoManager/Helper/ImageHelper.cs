@@ -11,14 +11,13 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using KsWare.CaliburnMicro.Tools;
 using KsWare.Presentation.StaticWrapper;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
-	public static class ImageTools
+	public static class ImageHelper
 	{
 		private static IApplicationDispatcher ApplicationDispatcher => AssemblyBootstrapper.ApplicationDispatcher;
 		private static bool InvokeRequired => ApplicationDispatcher.InvokeRequired;

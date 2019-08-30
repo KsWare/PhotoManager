@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
-using System.Windows.Shapes;
 using KsWare.PhotoManager.Communication;
-using  System.IO;
-using KsWare.CaliburnMicro.Tools;
 using KsWare.Presentation.StaticWrapper;
 using Path = System.IO.Path;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
 	public class ImageWorker : IDisposable
 	{
@@ -49,16 +45,16 @@ namespace KsWare.PhotoManager.Tools
 				var cacheFilePath = GetCacheFilePath(FilePath, _maxSize, ".jpg");
 				if (File.Exists(cacheFilePath))
 				{
-					var imageSource = ImageTools.CreateBitmapSource(cacheFilePath);
+					var imageSource = ImageHelper.CreateBitmapSource(cacheFilePath);
 					var msg = new ImageLoadedMessage(imageSource);
 					ApplicationDispatcher.Do.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);
 				}
 				else
 				{
-					var previewImage = ImageTools.CreatePreview(FilePath, _maxSize);
+					var previewImage = ImageHelper.CreatePreview(FilePath, _maxSize);
 					previewImage.SaveAsJpeg(cacheFilePath,75);
 					Debug.WriteLine($"Preview Image created ({previewImage.Width}x{previewImage.Height} {previewImage.PixelFormat})");
-					var imageSource = ImageTools.CreateBitmapSource2(previewImage);
+					var imageSource = ImageHelper.CreateBitmapSource2(previewImage);
 					var msg = new ImageLoadedMessage(imageSource);
 					ApplicationDispatcher.Do.Invoke(new Func<IMessage, IMessage>(_messageSink.SyncProcessMessage), msg);					
 				}

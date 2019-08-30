@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
 	// https://www.codeproject.com/Articles/22012/Explorer-Shell-Context-Menu
 

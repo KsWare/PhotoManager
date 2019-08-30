@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
-namespace KsWare.PhotoManager.Tools
+namespace KsWare.PhotoManager.Helper
 {
 	[Export, PartCreationPolicy(CreationPolicy.Shared)]
 	public class ImageLoader : IDisposable
