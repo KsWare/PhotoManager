@@ -51,8 +51,8 @@
     <Reference Include="JetBrains.Annotations, Version=2019.1.3.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.2019.1.3\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="KsWare.CaliburnMicro, Version=0.1.9.0, Culture=neutral, PublicKeyToken=398cf6eb36307095, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.KsWare.0.1.9\lib\net45\KsWare.CaliburnMicro.dll</HintPath>
+    <Reference Include="KsWare.CaliburnMicro, Version=0.1.15.0, Culture=neutral, PublicKeyToken=398cf6eb36307095, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.KsWare.0.1.15\lib\net45\KsWare.CaliburnMicro.dll</HintPath>
     </Reference>
     <Reference Include="KsWare.Presentation.StaticWrapper, Version=0.1.6.0, Culture=neutral, PublicKeyToken=398cf6eb36307095, processorArchitecture=MSIL">
       <HintPath>..\packages\KsWare.Presentation.StaticWrapper.0.1.6\lib\net45\KsWare.Presentation.StaticWrapper.dll</HintPath>
@@ -100,6 +100,11 @@
     <Compile Include="Behaviors\VirtualizationBehavior.cs" />
     <Compile Include="Communication\ImageLoadedMessage.cs" />
     <Compile Include="Communication\TextMessage.cs" />
+    <Compile Include="Screens\About\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Screens\About\AboutViewModel.cs" />
     <Compile Include="Screens\ImageViewer\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
     </Compile>
@@ -132,6 +137,10 @@
     <Compile Include="Tools\OpenWithInfo.cs" />
     <Compile Include="Tools\ShellContextMenu.cs" />
     <Compile Include="Tools\WindowShell.cs" />
+    <Page Include="Screens\About\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Screens\ImageViewer\ImageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -199,6 +208,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Components.txt" />
     <Content Include="template\styles\main.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

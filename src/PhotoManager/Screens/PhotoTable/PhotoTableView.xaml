@@ -9,22 +9,16 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:photoTable="clr-namespace:KsWare.PhotoManager.Screens.PhotoTable"
+             xmlns:commands="clr-namespace:KsWare.CaliburnMicro.Commands;assembly=KsWare.CaliburnMicro"
              mc:Ignorable="d"
 			 x:Name="Root"
              d:DataContext="{d:DesignInstance photoTable:PhotoTableViewModel, IsDesignTimeCreatable=False}" d:DesignWidth="427" d:DesignHeight="218">
 	<GroupBox Header="Photo Table">
 		<DockPanel>
-			<Menu DockPanel.Dock="Top">
-				<MenuItem Header="_File">
-					<MenuItem x:Name="MenuFileOpenFolder" Header="Open Folder..."/>
-					<MenuItem x:Name="MenuFileOpenFile" Header="Open File..."/>
-				</MenuItem>
-				<MenuItem Header="_Edit" />
-				<MenuItem Header="_View">
-					<MenuItem x:Name="MenuViewOpenImage"  Header="Open Image" />
-					<MenuItem x:Name="MenuViewRefresh"  Header="Refresh" />
-					<MenuItem x:Name="MenuViewColorTest"  Header="Color Test" />
-				</MenuItem>
+			<Menu DockPanel.Dock="Top" ItemsSource="{Binding MenuItems}" UsesItemContainerTemplate="True">
+				<Menu.Resources>
+					<!-- TODO move to global resource -->
+				</Menu.Resources>
 			</Menu>
 			<Grid DockPanel.Dock="Top" Background="{StaticResource GrayBrush8}">
 				<DockPanel LastChildFill="False" Margin="4">

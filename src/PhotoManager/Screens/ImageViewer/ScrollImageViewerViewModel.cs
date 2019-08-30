@@ -91,6 +91,7 @@ namespace KsWare.PhotoManager.Screens.ImageViewer
 		public void MenuViewPhotoTable()
 		{
 			_shell.ShowPhotoTable();
+			 
 		}
 
 		private void OnCurrentItemChanged()

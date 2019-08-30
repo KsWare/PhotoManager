@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using KsWare.CaliburnMicro.Commands;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.DragDrop;
-using KsWare.CaliburnMicro.Extensions;
 using KsWare.CaliburnMicro.Shared;
-using KsWare.CaliburnMicro.Tools;
 using KsWare.PhotoManager.Resources;
+using KsWare.PhotoManager.Screens.About;
 using KsWare.PhotoManager.Screens.ImageViewer;
 using KsWare.PhotoManager.Settings;
 using KsWare.PhotoManager.Shell;
@@ -31,6 +31,8 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		[Import] private IServiceLocator _serviceLocator;
 		[Import] private SettingsManager _settingsManager;
 		[Import(typeof(IShell))] private ShellViewModel _shell;
+		[Import] private IApplication _application;
+		[Import] private AboutViewModel _aboutViewModel;
 		private ApplicationDispatcherExtender UiThread = ApplicationDispatcher.Do;
 
 		private readonly string[] _supportedExtensions = ImageTools.SupportedExtensions.Select(x => x.Key).ToArray();
@@ -69,7 +71,38 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			else
 				Task.Run(MenuFileOpenFolder).ConfigureAwait(false);
 			_selectedItems.CollectionChanged += SelectedItems_CollectionChanged;
+			InitMenu();
 		}
+
+		private void InitMenu()
+		{
+			MenuItems.Clear();;
+			MenuItems.Add(new MenuItemViewModel("_File", new[]
+			{
+				new MenuItemViewModel("_Open Folder...", MenuFileOpenFolder),
+				new MenuItemViewModel("Open _File...", MenuFileOpenFile),
+				new MenuItemSeparatorViewModel(),
+				new MenuItemViewModel("_Exit", MenuFileExit),
+			}));
+//			MenuItems.Add(new MenuItemViewModel("_Edit", new[]
+//				{
+//				}));
+			MenuItems.Add(new MenuItemViewModel("_View", new[]
+			{
+				new MenuItemViewModel("Open Image", MenuViewOpenImage),
+				new MenuItemViewModel("Refresh", MenuViewRefresh),
+			}));
+			MenuItems.Add(new MenuItemViewModel("_Window", new[]
+			{
+				new MenuItemViewModel("_Color Test", MenuWindowColorTest)
+			}));
+			MenuItems.Add(new MenuItemViewModel("_Help", new[]
+			{
+				new MenuItemViewModel("_About...", MenuHelpAbout),
+			}));
+		}
+
+		public IList<IMenuItemViewModel> MenuItems { get; } = new BindableCollection<IMenuItemViewModel>();
 
 		private void SelectedItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -121,10 +154,23 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			ApplicationDispatcher.Do.RunAsync(() => _shell.ShowImageViewer());
 			ApplicationDispatcher.Do.RunAsync(() => ((ImageViewerViewModel) _shell.ActiveItem).MenuFileOpen());
 		}
-
-		public void MenuViewColorTest()
+		public void MenuFileExit()
 		{
-			_shell.ActivateItem(new ColorTestViewModel());
+			_application.Shutdown();
+		}
+
+		public void MenuWindowColorTest()
+		{
+			_shell.ActivateItem(new ColorTestViewModel()); //TODO Testcode
+		}
+		public void MenuHelpAbout()
+		{
+			_shell.ActivateItem(_aboutViewModel);
+		}
+
+		public void MenuViewRefresh()
+		{
+			
 		}
 
 		public void MenuViewOpenImage()

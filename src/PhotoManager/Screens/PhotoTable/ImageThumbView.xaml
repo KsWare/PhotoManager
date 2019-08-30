@@ -21,6 +21,7 @@
 			UsesItemContainerTemplate="True"
 		>
 			<ContextMenu.Resources>
+				<!-- TODO move to global resource -->
 				<ItemContainerTemplate DataType="{x:Type commands:MenuItemSeparatorViewModel}">
 					<Separator/>
 				</ItemContainerTemplate>				
