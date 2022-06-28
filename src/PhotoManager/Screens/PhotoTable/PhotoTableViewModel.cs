@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Caliburn.Micro;
 using KsWare.CaliburnMicro.Commands;
 using KsWare.CaliburnMicro.Common;
 using KsWare.CaliburnMicro.DragDrop;
+using KsWare.PhotoManager.Commands;
 using KsWare.PhotoManager.Helper;
 using KsWare.PhotoManager.Resources;
 using KsWare.PhotoManager.Screens.About;
 using KsWare.PhotoManager.Screens.ImageViewer;
+using KsWare.PhotoManager.Screens.PhotoTable.Commands;
 using KsWare.PhotoManager.Settings;
 using KsWare.PhotoManager.Shell;
 using KsWare.Presentation.StaticWrapper;
@@ -31,7 +35,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		[Import] private SettingsManager _settingsManager;
 		[Import(typeof(IShell))] private ShellViewModel _shell;
 		[Import] private IApplication _application;
-		[Import] private AboutViewModel _aboutViewModel;
+		
 		private ApplicationDispatcherExtender UiThread = ApplicationDispatcher.Do;
 
 		private readonly string[] _supportedExtensions = ImageHelper.SupportedExtensions.Select(x => x.Key).ToArray();
@@ -45,6 +49,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		private IObservableCollection<ImageThumbViewModel> _selectedItems = new BindableCollection<ImageThumbViewModel>();
 		private bool _isMoreAsOneItemSelected;
 		private int _selectedItemsCount;
+		private string _folderPath;
 
 		public ImageThumbViewModel SelectedItem { get => _selectedItem; set => Set(ref _selectedItem, value); }
 
@@ -66,9 +71,14 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 		void IPartImportsSatisfiedNotification.OnImportsSatisfied()
 		{
 			if (_settingsManager.User.DefaultFolder != null)
-				Task.Run(() => LoadAsync(_settingsManager.User.DefaultFolder).Wait()).ConfigureAwait(false);
+			{
+				Task.Run(() => LoadAsync(_settingsManager.User.DefaultFolder));
+			}
 			else
-				Task.Run(MenuFileOpenFolder).ConfigureAwait(false);
+			{
+//				Task.Run(MenuFileOpenFolder).ConfigureAwait(false);
+			}
+
 			_selectedItems.CollectionChanged += SelectedItems_CollectionChanged;
 			InitMenu();
 		}
@@ -81,7 +91,7 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 				new MenuItemViewModel("_Open Folder...", MenuFileOpenFolder),
 				new MenuItemViewModel("Open _File...", MenuFileOpenFile),
 				new MenuItemSeparatorViewModel(),
-				new MenuItemViewModel("_Exit", MenuFileExit),
+				new MenuItemViewModel("_Exit", _serviceLocator.GetInstance<ExitApplicationCommand>()),
 			}));
 //			MenuItems.Add(new MenuItemViewModel("_Edit", new[]
 //				{
@@ -91,13 +101,18 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 				new MenuItemViewModel("Open Image", MenuViewOpenImage),
 				new MenuItemViewModel("Refresh", MenuViewRefresh),
 			}));
+			MenuItems.Add(new MenuItemViewModel("_Tools", new[]
+			{
+				new MenuItemViewModel("Open in Explorer", _serviceLocator.GetInstance<OpenFolderInExplorerCommand>(c=> c.FolderPath = () => FolderPath)),
+				new MenuItemViewModel("Copy full path", _serviceLocator.GetInstance<CopyFullPathToClipboardCommand>(c=> c.FolderPath = () => FolderPath)),
+			}));
 			MenuItems.Add(new MenuItemViewModel("_Window", new[]
 			{
 				new MenuItemViewModel("_Color Test", MenuWindowColorTest)
 			}));
 			MenuItems.Add(new MenuItemViewModel("_Help", new[]
 			{
-				new MenuItemViewModel("_About...", MenuHelpAbout),
+				new MenuItemViewModel("_About...", _serviceLocator.GetInstance<ShowAboutDialog>()),
 			}));
 		}
 
@@ -148,25 +163,19 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			await LoadAsync(_settingsManager.User.DefaultFolder).ConfigureAwait(false);
 		}
 
+		public string FolderPath { get => _folderPath; private set => Set(ref _folderPath, value);}
+
 		public void MenuFileOpenFile()
 		{
 			ApplicationDispatcher.Do.RunAsync(() => _shell.ShowImageViewer());
 			ApplicationDispatcher.Do.RunAsync(() => ((ImageViewerViewModel) _shell.ActiveItem).MenuFileOpen());
-		}
-		public void MenuFileExit()
-		{
-			_application.Shutdown();
 		}
 
 		public void MenuWindowColorTest()
 		{
 			_shell.ActivateItem(new ColorTestViewModel()); //TODO Testcode
 		}
-		public void MenuHelpAbout()
-		{
-			_shell.ActivateItem(_aboutViewModel);
-		}
-
+		
 		public void MenuViewRefresh()
 		{
 			
@@ -193,11 +202,15 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			imageViewer.OpenImage(item.FilePath);
 		}
 
-		private Task LoadAsync(string path)
+		private async Task LoadAsync(string path)
 		{
 			var tasks=new TaskList();
 
-			tasks.RunOnUiThread((Action) (() => Items = null));
+			tasks.RunOnUiThread((Action) (() =>
+			{
+				Items = null;
+				_selectedItems.Clear();
+			}));
 
 			var directory = new DirectoryInfo(path);
 			var files = directory.GetFiles();
@@ -216,7 +229,9 @@ namespace KsWare.PhotoManager.Screens.PhotoTable
 			tasks.RunOnUiThread((Action) (() => Items = new BindableCollection<ImageThumbViewModel>(items)));
 			tasks.AddRange(items.Select(i => i.InitializeAsync()));
 
-			return Task.WhenAll(tasks);
+			await Task.WhenAll(tasks).ConfigureAwait(false);
+			FolderPath = _settingsManager.User.DefaultFolder;
+
 		}
 
 		void ICustomDropTarget.OnDrop(object sender, DragEventArgs e)

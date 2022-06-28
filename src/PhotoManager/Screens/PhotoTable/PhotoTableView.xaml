@@ -30,6 +30,8 @@
 						<system:Int32>128</system:Int32>
 						<system:Int32>194</system:Int32>
 						<system:Int32>256</system:Int32>
+						<system:Int32>384</system:Int32>
+						<system:Int32>512</system:Int32>
 					</ComboBox>
 
 					<CheckBox x:Name="ShowDisplayNames" Margin="8 0 0 0" Content="Show Names"/>

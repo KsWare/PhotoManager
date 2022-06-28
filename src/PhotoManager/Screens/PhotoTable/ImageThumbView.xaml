@@ -50,6 +50,22 @@
 				Visibility="{Binding ShowDisplayName, Converter={StaticResource BoolToVisibilityConverter}}"
 				>
 			</TextBlock>
+
+			<Grid Visibility="{VisibilityBinding Parent.ShowMarkers, TrueVisibleElseHidden}">
+				<Path 
+					DataContext="{Binding Marker[0]}"
+					Visibility="{VisibilityBinding IsVisible, TrueVisibleElseHidden}"
+					Fill="{Binding Color, Converter=BrushConverter.Default}"
+					HorizontalAlignment="Left" VerticalAlignment="Top" Data="M10,0 h-10 v10 z" Fill="GreenYellow"/>
+				<Path 
+					HorizontalAlignment="Right" VerticalAlignment="Top" Data="M0,0 h10 v10 z" Fill="GreenYellow"/>
+				<Path 
+					HorizontalAlignment="Right" VerticalAlignment="Bottom" Data="M10,0 v10 h-10 z" Fill="GreenYellow"/>
+				<Path 
+					HorizontalAlignment="Left" VerticalAlignment="Bottom" Data="M0,0 v10 h10 z" Fill="GreenYellow"/>
+			</Grid>
+
+
 			<TextBlock 
 				Text="{Binding DisplayName}" 
 				TextWrapping="Wrap" 
