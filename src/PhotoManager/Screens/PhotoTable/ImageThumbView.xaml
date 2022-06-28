@@ -7,6 +7,7 @@
 	xmlns:cal="http://www.caliburnproject.org"
              xmlns:photoTable="clr-namespace:KsWare.PhotoManager.Screens.PhotoTable"
              xmlns:commands="clr-namespace:KsWare.CaliburnMicro.Commands;assembly=KsWare.CaliburnMicro"
+             xmlns:converters="clr-namespace:KsWare.Presentation.Converters;assembly=KsWare.CaliburnMicro"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
              d:DataContext="{d:DesignInstance photoTable:ImageThumbViewModel, IsDesignTimeCreatable=False}"
              >
@@ -51,12 +52,12 @@
 				>
 			</TextBlock>
 
-			<Grid Visibility="{VisibilityBinding Parent.ShowMarkers, TrueVisibleElseHidden}">
+			<Grid Visibility="{converters:VisibilityBinding Parent.ShowMarkers, TrueVisibleElseHidden}">
 				<Path 
 					DataContext="{Binding Marker[0]}"
-					Visibility="{VisibilityBinding IsVisible, TrueVisibleElseHidden}"
+					Visibility="{converters:VisibilityBinding IsVisible, TrueVisibleElseHidden}"
 					Fill="{Binding Color, Converter=BrushConverter.Default}"
-					HorizontalAlignment="Left" VerticalAlignment="Top" Data="M10,0 h-10 v10 z" Fill="GreenYellow"/>
+					HorizontalAlignment="Left" VerticalAlignment="Top" Data="M10,0 h-10 v10 z" />
 				<Path 
 					HorizontalAlignment="Right" VerticalAlignment="Top" Data="M0,0 h10 v10 z" Fill="GreenYellow"/>
 				<Path 
