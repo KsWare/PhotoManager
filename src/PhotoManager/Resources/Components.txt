@@ -1,0 +1,26 @@
+﻿Caliburn.Micro
+	MIT License
+Caliburn.Micro.Core
+	MIT License
+Caliburn.Micro.KsWare
+	LGPL v3
+ControlzEx
+	MIT License
+JetBrains.Annotations
+	MIT License
+KsWare.Presentation.StaticWrapper
+	LGPL v3
+MahApps.Metro
+	MIT License
+Microsoft-WindowsAPICodePack-Core
+	(rpastric)
+Microsoft-WindowsAPICodePack-Shell
+	(rpastric)
+Newtonsoft.Json
+	MIT License
+NUnit
+	MIT License?
+NUnit3TestAdapter
+	MIT License?
+VirtualizingWrapPanel
+	MIT License

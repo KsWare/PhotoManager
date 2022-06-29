@@ -1,4 +1,0 @@
-version: 0.9.{build}
-image: Visual Studio 2019
-build:
-  verbosity: minimal

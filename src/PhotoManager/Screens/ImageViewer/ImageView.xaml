@@ -1,0 +1,34 @@
+<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:behaviors="clr-namespace:KsWare.PhotoManager.Behaviors" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:imageViewer="clr-namespace:KsWare.PhotoManager.Screens.ImageViewer"
+	mc:Ignorable="d" 
+	x:Class="KsWare.PhotoManager.Screens.ImageViewer.ImageView"
+	d:DataContext="{d:DesignInstance imageViewer:ImageViewModel, IsDesignTimeCreatable=False}" d:DesignWidth="133" d:DesignHeight="83"
+>
+	<FrameworkElement.Resources>
+		<Style x:Key="SemiTransparentTextBoxStyle" TargetType="TextBox">
+			<Setter Property="IsReadOnly" Value="True" />
+			<Setter Property="BorderBrush" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="Background" Value="#80000000" />
+			<Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
+		</Style>
+	</FrameworkElement.Resources>
+	<i:Interaction.Behaviors>
+		<behaviors:VirtualizationBehavior/>
+	</i:Interaction.Behaviors>
+	<Grid>
+		<TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource LabelTextBrush}"/>
+		<Image Source="{Binding ImageSource}" Stretch="Uniform" />
+		<TextBox 
+			Text="{Binding FileName, Mode=OneWay}" 
+			Padding="0" Margin="0 4 0 0" 
+			HorizontalAlignment="Center" VerticalAlignment="Top"
+			Style="{StaticResource SemiTransparentTextBoxStyle}" />
+	</Grid>
+</UserControl>
